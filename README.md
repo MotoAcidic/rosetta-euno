@@ -43,7 +43,7 @@ Running the following commands will create a Docker image called `rosetta-euno:l
 #### From GitHub
 To download the pre-built Docker image from the latest release, run:
 ```text
-curl -sSfL https://raw.githubusercontent.com/eunocurrency/rosetta-euno/master/install.sh | sh -s
+curl -sSfL https://raw.githubusercontent.com/MotoAcidic/rosetta-euno/master/install.sh | sh -s
 ```
 _Do not try to install rosetta-euno using GitHub Packages!_
 
