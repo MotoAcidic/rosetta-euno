@@ -61,7 +61,7 @@ at port `8080`.
 
 #### Mainnet:Online
 ```text
-docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/euno-data:/data" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -p 8080:8080 -p 21102:21102 rosetta-euno:latest
+docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/euno-data:/data" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -p 8080:8080 -p 46463:46463 rosetta-euno:latest
 ```
 _If you cloned the repository, you can run `make run-mainnet-online`._
 
@@ -73,7 +73,7 @@ _If you cloned the repository, you can run `make run-mainnet-offline`._
 
 #### Testnet:Online
 ```text
-docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/euno-data:/data" -e "MODE=ONLINE" -e "NETWORK=TESTNET" -e "PORT=8080" -p 8080:8080 -p 21104:21104 rosetta-euno:latest
+docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/euno-data:/data" -e "MODE=ONLINE" -e "NETWORK=TESTNET" -e "PORT=8080" -p 8080:8080 -p 46465:46465 rosetta-euno:latest
 ```
 _If you cloned the repository, you can run `make run-testnet-online`._
 
