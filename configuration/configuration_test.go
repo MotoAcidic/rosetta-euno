@@ -20,7 +20,7 @@ import (
 	"path"
 	"testing"
 
-	"github.com/vergecurrency/rosetta-verge/verge"
+	"github.com/eunocurrency/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/storage/encoder"
 	"github.com/coinbase/rosetta-sdk-go/types"
@@ -56,12 +56,12 @@ func TestLoadConfiguration(t *testing.T) {
 			cfg: &Configuration{
 				Mode: Online,
 				Network: &types.NetworkIdentifier{
-					Network:    verge.MainnetNetwork,
-					Blockchain: verge.Blockchain,
+					Network:    euno.MainnetNetwork,
+					Blockchain: euno.Blockchain,
 				},
-				Params:                 verge.MainnetParams,
-				Currency:               verge.MainnetCurrency,
-				GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+				Params:                 euno.MainnetParams,
+				Currency:               euno.MainnetCurrency,
+				GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 				Port:                   1000,
 				RPCPort:                mainnetRPCPort,
 				ConfigPath:             mainnetConfigPath,
@@ -85,12 +85,12 @@ func TestLoadConfiguration(t *testing.T) {
 			cfg: &Configuration{
 				Mode: Online,
 				Network: &types.NetworkIdentifier{
-					Network:    verge.TestnetNetwork,
-					Blockchain: verge.Blockchain,
+					Network:    euno.TestnetNetwork,
+					Blockchain: euno.Blockchain,
 				},
-				Params:                 verge.TestnetParams,
-				Currency:               verge.TestnetCurrency,
-				GenesisBlockIdentifier: verge.TestnetGenesisBlockIdentifier,
+				Params:                 euno.TestnetParams,
+				Currency:               euno.TestnetCurrency,
+				GenesisBlockIdentifier: euno.TestnetGenesisBlockIdentifier,
 				Port:                   1000,
 				RPCPort:                testnetRPCPort,
 				ConfigPath:             testnetConfigPath,
@@ -143,7 +143,7 @@ func TestLoadConfiguration(t *testing.T) {
 				assert.Contains(t, err.Error(), test.err.Error())
 			} else {
 				test.cfg.IndexerPath = path.Join(newDir, "indexer")
-				test.cfg.VergedPath = path.Join(newDir, "verged")
+				test.cfg.EunodPath = path.Join(newDir, "eunod")
 				assert.Equal(t, test.cfg, cfg)
 				assert.NoError(t, err)
 			}

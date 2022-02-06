@@ -13,7 +13,7 @@ GOLINT_CMD=golint
 GOVERALLS_INSTALL=go install github.com/mattn/goveralls@latest
 GOVERALLS_CMD=goveralls
 GOIMPORTS_CMD=go run golang.org/x/tools/cmd/goimports
-GO_PACKAGES=./services/... ./indexer/... ./verge/... ./configuration/...
+GO_PACKAGES=./services/... ./indexer/... ./euno/... ./configuration/...
 GO_FOLDERS=$(shell echo ${GO_PACKAGES} | sed -e "s/\.\///g" | sed -e "s/\/\.\.\.//g")
 TEST_SCRIPT=go test ${GO_PACKAGES}
 LINT_SETTINGS=golint,misspell,gocyclo,gocritic,whitespace,goconst,gocognit,bodyclose,unconvert,lll,unparam
@@ -24,27 +24,27 @@ deps:
 	go get ./...
 
 build:
-	docker build -t rosetta-verge:latest https://github.com/vergecurrency/rosetta-verge.git
+	docker build -t rosetta-euno:latest https://github.com/eunocurrency/rosetta-euno.git
 
 build-local:
-	docker build -t rosetta-verge:latest .
+	docker build -t rosetta-euno:latest .
 
 build-release:
 	# make sure to always set version with vX.X.X
-	docker build -t rosetta-verge:$(version) .;
-	docker save rosetta-verge:$(version) | gzip > rosetta-verge-$(version).tar.gz;
+	docker build -t rosetta-euno:$(version) .;
+	docker save rosetta-euno:$(version) | gzip > rosetta-euno-$(version).tar.gz;
 
 run-mainnet-online:
-	docker run -d --rm --ulimit "nofile=${NOFILE}:${NOFILE}" -v "${PWD}/verge-data:/data" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -p 8080:8080 -p 21102:21102 rosetta-verge:latest
+	docker run -d --rm --ulimit "nofile=${NOFILE}:${NOFILE}" -v "${PWD}/euno-data:/data" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -p 8080:8080 -p 21102:21102 rosetta-euno:latest
 
 run-mainnet-offline:
-	docker run -d --rm -e "MODE=OFFLINE" -e "NETWORK=MAINNET" -e "PORT=8081" -p 8081:8081 rosetta-verge:latest
+	docker run -d --rm -e "MODE=OFFLINE" -e "NETWORK=MAINNET" -e "PORT=8081" -p 8081:8081 rosetta-euno:latest
 
 run-testnet-online:
-	docker run -d --rm --ulimit "nofile=${NOFILE}:${NOFILE}" -v "${PWD}/verge-data:/data" -e "MODE=ONLINE" -e "NETWORK=TESTNET" -e "PORT=8080" -p 8080:8080 -p 21104:21104 rosetta-verge:latest
+	docker run -d --rm --ulimit "nofile=${NOFILE}:${NOFILE}" -v "${PWD}/euno-data:/data" -e "MODE=ONLINE" -e "NETWORK=TESTNET" -e "PORT=8080" -p 8080:8080 -p 21104:21104 rosetta-euno:latest
 
 run-testnet-offline:
-	docker run -d --rm -e "MODE=OFFLINE" -e "NETWORK=TESTNET" -e "PORT=8081" -p 8081:8081 rosetta-verge:latest
+	docker run -d --rm -e "MODE=OFFLINE" -e "NETWORK=TESTNET" -e "PORT=8081" -p 8081:8081 rosetta-euno:latest
 
 train:
 	./zstd-train.sh $(network) transaction $(data-directory)

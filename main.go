@@ -24,11 +24,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/vergecurrency/rosetta-verge/configuration"
-	"github.com/vergecurrency/rosetta-verge/indexer"
-	"github.com/vergecurrency/rosetta-verge/services"
-	"github.com/vergecurrency/rosetta-verge/utils"
-	"github.com/vergecurrency/rosetta-verge/verge"
+	"github.com/eunocurrency/rosetta-euno/configuration"
+	"github.com/eunocurrency/rosetta-euno/indexer"
+	"github.com/eunocurrency/rosetta-euno/services"
+	"github.com/eunocurrency/rosetta-euno/utils"
+	"github.com/eunocurrency/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/asserter"
 	"github.com/coinbase/rosetta-sdk-go/server"
@@ -79,15 +79,15 @@ func startOnlineDependencies(
 	cancel context.CancelFunc,
 	cfg *configuration.Configuration,
 	g *errgroup.Group,
-) (*verge.Client, *indexer.Indexer, error) {
-	client := verge.NewClient(
-		verge.LocalhostURL(cfg.RPCPort),
+) (*euno.Client, *indexer.Indexer, error) {
+	client := euno.NewClient(
+		euno.LocalhostURL(cfg.RPCPort),
 		cfg.GenesisBlockIdentifier,
 		cfg.Currency,
 	)
 
 	g.Go(func() error {
-		return verge.StartVerged(ctx, cfg.ConfigPath, g)
+		return euno.StartEunod(ctx, cfg.ConfigPath, g)
 	})
 
 	i, err := indexer.Initialize(
@@ -142,7 +142,7 @@ func main() {
 	})
 
 	var i *indexer.Indexer
-	var client *verge.Client
+	var client *euno.Client
 	if cfg.Mode == configuration.Online {
 		client, i, err = startOnlineDependencies(ctx, cancel, cfg, g)
 		if err != nil {
@@ -153,7 +153,7 @@ func main() {
 	// The asserter automatically rejects incorrectly formatted
 	// requests.
 	asserter, err := asserter.NewServer(
-		verge.OperationTypes,
+		euno.OperationTypes,
 		services.HistoricalBalanceLookup,
 		[]*types.NetworkIdentifier{cfg.Network},
 		nil,
@@ -198,10 +198,10 @@ func main() {
 	}
 
 	if signalReceived {
-		logger.Fatalw("rosetta-verge halted")
+		logger.Fatalw("rosetta-euno halted")
 	}
 
 	if err != nil {
-		logger.Fatalw("rosetta-verge sync failed", "error", err)
+		logger.Fatalw("rosetta-euno sync failed", "error", err)
 	}
 }

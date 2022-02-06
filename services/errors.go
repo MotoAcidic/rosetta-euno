@@ -25,7 +25,7 @@ var (
 		ErrUnimplemented,
 		ErrUnavailableOffline,
 		ErrNotReady,
-		ErrVerged,
+		ErrEunod,
 		ErrBlockNotFound,
 		ErrUnableToDerive,
 		ErrUnclearIntent,
@@ -57,19 +57,19 @@ var (
 		Message: "Endpoint unavailable offline",
 	}
 
-	// ErrNotReady is returned when verged is not
+	// ErrNotReady is returned when eunod is not
 	// yet ready to serve queries.
 	ErrNotReady = &types.Error{
 		Code:      2, //nolint
-		Message:   "Verged is not ready",
+		Message:   "Eunod is not ready",
 		Retriable: true,
 	}
 
-	// ErrVerged is returned when verged
+	// ErrEunod is returned when eunod
 	// errors on a request.
-	ErrVerged = &types.Error{
+	ErrEunod = &types.Error{
 		Code:    3, //nolint
-		Message: "Verged error",
+		Message: "Eunod error",
 	}
 
 	// ErrBlockNotFound is returned when a block
@@ -104,7 +104,7 @@ var (
 
 	// ErrScriptPubKeysMissing is returned when
 	// the indexer cannot populate the required
-	// verge.ScriptPubKeys to construct a transaction.
+	// euno.ScriptPubKeys to construct a transaction.
 	ErrScriptPubKeysMissing = &types.Error{
 		Code:    8, //nolint
 		Message: "Missing ScriptPubKeys",
@@ -125,7 +125,7 @@ var (
 	}
 
 	// ErrUnableToDecodeScriptPubKey is returned when a
-	// verge.ScriptPubKey cannot be parsed during construction.
+	// euno.ScriptPubKey cannot be parsed during construction.
 	ErrUnableToDecodeScriptPubKey = &types.Error{
 		Code:    11, //nolint
 		Message: "Unable to decode ScriptPubKey",

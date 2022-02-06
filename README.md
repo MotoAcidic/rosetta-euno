@@ -4,24 +4,24 @@
   </a>
 </p>
 <h3 align="center">
-   Rosetta Verge
+   Rosetta Euno
 </h3>
 <p align="center">
-  <a href="https://circleci.com/gh/vergecurrency/rosetta-verge/tree/master"><img src="https://circleci.com/gh/vergecurrency/rosetta-verge/tree/master.svg?style=shield" /></a>
-  <a href="https://coveralls.io/github/vergecurrency/rosetta-verge"><img src="https://coveralls.io/repos/github/vergecurrency/rosetta-verge/badge.svg" /></a>
-  <a href="https://goreportcard.com/report/github.com/vergecurrency/rosetta-verge"><img src="https://goreportcard.com/badge/github.com/vergecurrency/rosetta-verge" /></a>
-  <a href="https://github.com/vergecurrency/rosetta-verge/blob/master/LICENSE.txt"><img src="https://img.shields.io/github/license/vergecurrency/rosetta-verge.svg" /></a>
-  <a href="https://pkg.go.dev/github.com/vergecurrency/rosetta-verge?tab=overview"><img src="https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=shield" /></a>
+  <a href="https://circleci.com/gh/eunocurrency/rosetta-euno/tree/master"><img src="https://circleci.com/gh/eunocurrency/rosetta-euno/tree/master.svg?style=shield" /></a>
+  <a href="https://coveralls.io/github/eunocurrency/rosetta-euno"><img src="https://coveralls.io/repos/github/eunocurrency/rosetta-euno/badge.svg" /></a>
+  <a href="https://goreportcard.com/report/github.com/eunocurrency/rosetta-euno"><img src="https://goreportcard.com/badge/github.com/eunocurrency/rosetta-euno" /></a>
+  <a href="https://github.com/eunocurrency/rosetta-euno/blob/master/LICENSE.txt"><img src="https://img.shields.io/github/license/eunocurrency/rosetta-euno.svg" /></a>
+  <a href="https://pkg.go.dev/github.com/eunocurrency/rosetta-euno?tab=overview"><img src="https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=shield" /></a>
 </p>
 
 <p align="center"><b>
-ROSETTA-VERGE IS CONSIDERED <a href="https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha">ALPHA SOFTWARE</a>.
+ROSETTA-EUNO IS CONSIDERED <a href="https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha">ALPHA SOFTWARE</a>.
 USE AT YOUR OWN RISK! COINBASE ASSUMES NO RESPONSIBILITY NOR LIABILITY IF THERE IS A BUG IN THIS IMPLEMENTATION.
 </b></p>
 
 ## Overview
-`rosetta-verge` provides a reference implementation of the Rosetta API for
-Verge in Golang. If you haven't heard of the Rosetta API, you can find more
+`rosetta-euno` provides a reference implementation of the Rosetta API for
+Euno in Golang. If you haven't heard of the Rosetta API, you can find more
 information [here](https://rosetta-api.org).
 
 ## Features
@@ -38,14 +38,14 @@ all Rosetta implementations must be deployable via Docker and support running vi
 DOCKER [HERE](https://www.docker.com/get-started).**
 
 ### Install
-Running the following commands will create a Docker image called `rosetta-verge:latest`.
+Running the following commands will create a Docker image called `rosetta-euno:latest`.
 
 #### From GitHub
 To download the pre-built Docker image from the latest release, run:
 ```text
-curl -sSfL https://raw.githubusercontent.com/vergecurrency/rosetta-verge/master/install.sh | sh -s
+curl -sSfL https://raw.githubusercontent.com/eunocurrency/rosetta-euno/master/install.sh | sh -s
 ```
-_Do not try to install rosetta-verge using GitHub Packages!_
+_Do not try to install rosetta-euno using GitHub Packages!_
 
 #### From Source
 After cloning this repository, run:
@@ -56,39 +56,39 @@ make build-local
 ### Run
 Running the following commands will start a Docker container in
 [detached mode](https://docs.docker.com/engine/reference/run/#detached--d) with
-a data directory at `<working directory>/verge-data` and the Rosetta API accessible
+a data directory at `<working directory>/euno-data` and the Rosetta API accessible
 at port `8080`.
 
 #### Mainnet:Online
 ```text
-docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/verge-data:/data" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -p 8080:8080 -p 21102:21102 rosetta-verge:latest
+docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/euno-data:/data" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -p 8080:8080 -p 21102:21102 rosetta-euno:latest
 ```
 _If you cloned the repository, you can run `make run-mainnet-online`._
 
 #### Mainnet:Offline
 ```text
-docker run -d --rm -e "MODE=OFFLINE" -e "NETWORK=MAINNET" -e "PORT=8081" -p 8081:8081 rosetta-verge:latest
+docker run -d --rm -e "MODE=OFFLINE" -e "NETWORK=MAINNET" -e "PORT=8081" -p 8081:8081 rosetta-euno:latest
 ```
 _If you cloned the repository, you can run `make run-mainnet-offline`._
 
 #### Testnet:Online
 ```text
-docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/verge-data:/data" -e "MODE=ONLINE" -e "NETWORK=TESTNET" -e "PORT=8080" -p 8080:8080 -p 21104:21104 rosetta-verge:latest
+docker run -d --rm --ulimit "nofile=100000:100000" -v "$(pwd)/euno-data:/data" -e "MODE=ONLINE" -e "NETWORK=TESTNET" -e "PORT=8080" -p 8080:8080 -p 21104:21104 rosetta-euno:latest
 ```
 _If you cloned the repository, you can run `make run-testnet-online`._
 
 #### Testnet:Offline
 ```text
-docker run -d --rm -e "MODE=OFFLINE" -e "NETWORK=TESTNET" -e "PORT=8081" -p 8081:8081 rosetta-verge:latest
+docker run -d --rm -e "MODE=OFFLINE" -e "NETWORK=TESTNET" -e "PORT=8081" -p 8081:8081 rosetta-euno:latest
 ```
 _If you cloned the repository, you can run `make run-testnet-offline`._
 
 ## System Requirements
-`rosetta-verge` has been tested on an [AWS c5.2xlarge instance](https://aws.amazon.com/ec2/instance-types/c5).
+`rosetta-euno` has been tested on an [AWS c5.2xlarge instance](https://aws.amazon.com/ec2/instance-types/c5).
 This instance type has 8 vCPU and 16 GB of RAM.
 
 ### Network Settings
-To increase the load `rosetta-verge` can handle, it is recommended to tune your OS
+To increase the load `rosetta-euno` can handle, it is recommended to tune your OS
 settings to allow for more connections. On a linux-based OS, you can run the following
 commands ([source](http://www.tweaked.io/guide/kernel)):
 ```text
@@ -99,24 +99,24 @@ sysctl -w net.ipv4.tcp_max_syn_backlog=10000
 sysctl -w net.core.somaxconn=10000
 sysctl -p (when done)
 ```
-_We have not tested `rosetta-verge` with `net.ipv4.tcp_tw_recycle` and do not recommend
+_We have not tested `rosetta-euno` with `net.ipv4.tcp_tw_recycle` and do not recommend
 enabling it._
 
 You should also modify your open file settings to `100000`. This can be done on a linux-based OS
 with the command: `ulimit -n 100000`.
 
 ### Memory-Mapped Files
-`rosetta-verge` uses [memory-mapped files](https://en.wikipedia.org/wiki/Memory-mapped_file) to
-persist data in the `indexer`. As a result, you **must** run `rosetta-verge` on a 64-bit
+`rosetta-euno` uses [memory-mapped files](https://en.wikipedia.org/wiki/Memory-mapped_file) to
+persist data in the `indexer`. As a result, you **must** run `rosetta-euno` on a 64-bit
 architecture (the virtual address space easily exceeds 100s of GBs).
 
 If you receive a kernel OOM, you may need to increase the allocated size of swap space
 on your OS. There is a great tutorial for how to do this on Linux [here](https://linuxize.com/post/create-a-linux-swap-file/).
 
 ## Architecture
-`rosetta-verge` uses the `syncer`, `storage`, `parser`, and `server` package
+`rosetta-euno` uses the `syncer`, `storage`, `parser`, and `server` package
 from [`rosetta-sdk-go`](https://github.com/coinbase/rosetta-sdk-go) instead
-of a new Verge-specific implementation of packages of similar functionality. Below
+of a new Euno-specific implementation of packages of similar functionality. Below
 you can find a high-level overview of how everything fits together:
 ```text
                                +------------------------------------------------------------------+
@@ -129,7 +129,7 @@ you can find a high-level overview of how everything fits together:
                                +-------------------+ pruner <----------+                |         |
                                |                 | +--------+          |                |         |
                          +-----v----+            |                     |                |         |
-                         | verged |            |              +------+--------+       |         |
+                         | eunod |            |              +------+--------+       |         |
                          +-----+----+            |     +--------> block_storage <----+  |         |
                                |                 |     |        +---------------+    |  |         |
                                |                 | +---+----+                        |  |         |
@@ -157,20 +157,20 @@ you can find a high-level overview of how everything fits together:
 ```
 
 ### Optimizations
-* Automatically prune verged while indexing blocks
+* Automatically prune eunod while indexing blocks
 * Reduce sync time with concurrent block indexing
 * Use [Zstandard compression](https://github.com/facebook/zstd) to reduce the size of data stored on disk
 without needing to write a manual byte-level encoding
 
 #### Concurrent Block Syncing
-To speed up indexing, `rosetta-verge` uses concurrent block processing
+To speed up indexing, `rosetta-euno` uses concurrent block processing
 with a "wait free" design (using channels instead of sleeps to signal
-which threads are unblocked). This allows `rosetta-verge` to fetch
+which threads are unblocked). This allows `rosetta-euno` to fetch
 multiple inputs from disk while it waits for inputs that appeared
 in recently processed blocks to save to disk.
 ```text
                                                    +----------+
-                                                   | verged |
+                                                   | eunod |
                                                    +-----+----+
                                                          |
                                                          |
@@ -205,7 +205,7 @@ in recently processed blocks to save to disk.
 ```
 
 ## Testing with rosetta-cli
-To validate `rosetta-verge`, [install `rosetta-cli`](https://github.com/coinbase/rosetta-cli#install)
+To validate `rosetta-euno`, [install `rosetta-cli`](https://github.com/coinbase/rosetta-cli#install)
 and run one of the following commands:
 * `rosetta-cli check:data --configuration-file rosetta-cli-conf/testnet/config.json`
 * `rosetta-cli check:construction --configuration-file rosetta-cli-conf/testnet/config.json`

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright 2022 Verge Currency Foundation
+# Copyright 2022 Euno Currency Foundation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ set -e
 usage() {
   this=$1
   cat <<EOF
-$this: download pre-compiled Docker images for vergecurrency/rosetta-verge 
+$this: download pre-compiled Docker images for eunocurrency/rosetta-euno 
 
 Usage: $this [-d]
   -d turns on debug logging
@@ -45,8 +45,8 @@ execute() {
   log_info "downloading image into ${tmpdir}"
   http_download "${tmpdir}/${TARBALL}" "${TARBALL_URL}" "" "1"
   docker load --input "${tmpdir}/${TARBALL}"
-  docker tag "rosetta-verge:${TAG}" "rosetta-verge:latest"
-  log_info "loaded rosetta-verge:${TAG} and tagged as rosetta-verge:latest"
+  docker tag "rosetta-euno:${TAG}" "rosetta-euno:latest"
+  log_info "loaded rosetta-euno:${TAG} and tagged as rosetta-euno:latest"
   rm -rf "${tmpdir}"
   log_info "removed temporary directory ${tmpdir}"
 }
@@ -197,10 +197,10 @@ End of functions from https://github.com/client9/shlib
 ------------------------------------------------------------------------
 EOF
 
-BINARY=rosetta-verge
+BINARY=rosetta-euno
 FORMAT=tar.gz
-OWNER=vergecurrency
-REPO="rosetta-verge"
+OWNER=eunocurrency
+REPO="rosetta-euno"
 PREFIX="$OWNER/$REPO"
 
 # use in logging routines

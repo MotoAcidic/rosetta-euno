@@ -5,7 +5,7 @@ package services
 import (
 	context "context"
 
-	verge "github.com/vergecurrency/rosetta-verge/verge"
+	euno "github.com/eunocurrency/rosetta-euno/euno"
 
 	mock "github.com/stretchr/testify/mock"
 
@@ -128,15 +128,15 @@ func (_m *Indexer) GetCoins(_a0 context.Context, _a1 *types.AccountIdentifier) (
 }
 
 // GetScriptPubKeys provides a mock function with given fields: _a0, _a1
-func (_m *Indexer) GetScriptPubKeys(_a0 context.Context, _a1 []*types.Coin) ([]*verge.ScriptPubKey, error) {
+func (_m *Indexer) GetScriptPubKeys(_a0 context.Context, _a1 []*types.Coin) ([]*euno.ScriptPubKey, error) {
 	ret := _m.Called(_a0, _a1)
 
-	var r0 []*verge.ScriptPubKey
-	if rf, ok := ret.Get(0).(func(context.Context, []*types.Coin) []*verge.ScriptPubKey); ok {
+	var r0 []*euno.ScriptPubKey
+	if rf, ok := ret.Get(0).(func(context.Context, []*types.Coin) []*euno.ScriptPubKey); ok {
 		r0 = rf(_a0, _a1)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]*verge.ScriptPubKey)
+			r0 = ret.Get(0).([]*euno.ScriptPubKey)
 		}
 	}
 

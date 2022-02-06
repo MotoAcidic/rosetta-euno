@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package verge
+package euno
 
 import (
 	"bufio"
@@ -23,14 +23,14 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/vergecurrency/rosetta-verge/utils"
+	"github.com/eunocurrency/rosetta-euno/utils"
 
 	"golang.org/x/sync/errgroup"
 )
 
 const (
-	vergedLogger       = "verged"
-	vergedStdErrLogger = "verged stderr"
+	eunodLogger       = "eunod"
+	eunodStdErrLogger = "eunod stderr"
 )
 
 func logPipe(ctx context.Context, pipe io.ReadCloser, identifier string) error {
@@ -51,8 +51,8 @@ func logPipe(ctx context.Context, pipe io.ReadCloser, identifier string) error {
 			message = messages[1]
 		}
 
-		// Print debug log if from vergedLogger
-		if identifier == vergedLogger {
+		// Print debug log if from eunodLogger
+		if identifier == eunodLogger {
 			logger.Debugw(message)
 			continue
 		}
@@ -61,12 +61,12 @@ func logPipe(ctx context.Context, pipe io.ReadCloser, identifier string) error {
 	}
 }
 
-// StartVerged starts a verged daemon in another goroutine
+// StartEunod starts a eunod daemon in another goroutine
 // and logs the results to the console.
-func StartVerged(ctx context.Context, configPath string, g *errgroup.Group) error {
-	logger := utils.ExtractLogger(ctx, "verged")
+func StartEunod(ctx context.Context, configPath string, g *errgroup.Group) error {
+	logger := utils.ExtractLogger(ctx, "eunod")
 	cmd := exec.Command(
-		"/app/verged",
+		"/app/eunod",
 		fmt.Sprintf("--conf=%s", configPath),
 	) // #nosec G204
 
@@ -81,21 +81,21 @@ func StartVerged(ctx context.Context, configPath string, g *errgroup.Group) erro
 	}
 
 	g.Go(func() error {
-		return logPipe(ctx, stdout, vergedLogger)
+		return logPipe(ctx, stdout, eunodLogger)
 	})
 
 	g.Go(func() error {
-		return logPipe(ctx, stderr, vergedStdErrLogger)
+		return logPipe(ctx, stderr, eunodStdErrLogger)
 	})
 
 	if err := cmd.Start(); err != nil {
-		return fmt.Errorf("%w: unable to start verged", err)
+		return fmt.Errorf("%w: unable to start eunod", err)
 	}
 
 	g.Go(func() error {
 		<-ctx.Done()
 
-		logger.Warnw("sending interrupt to verged")
+		logger.Warnw("sending interrupt to eunod")
 		return cmd.Process.Signal(os.Interrupt)
 	})
 

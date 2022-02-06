@@ -17,7 +17,7 @@ package services
 import (
 	"context"
 
-	"github.com/vergecurrency/rosetta-verge/configuration"
+	"github.com/eunocurrency/rosetta-euno/configuration"
 
 	"github.com/coinbase/rosetta-sdk-go/server"
 	"github.com/coinbase/rosetta-sdk-go/types"
@@ -83,7 +83,7 @@ func (s *AccountAPIService) AccountCoins(
 	// TODO: filter coins by request currencies
 
 	// TODO: support include_mempool query
-	// https://github.com/vergecurrency/rosetta-verge/issues/36#issuecomment-724992022
+	// https://github.com/eunocurrency/rosetta-euno/issues/36#issuecomment-724992022
 	// Once mempoolcoins are supported also change the bool service/types.go:MempoolCoins to true
 
 	coins, block, err := s.i.GetCoins(ctx, request.AccountIdentifier)

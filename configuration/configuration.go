@@ -22,7 +22,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/vergecurrency/rosetta-verge/verge"
+	"github.com/eunocurrency/rosetta-euno/euno"
 
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/coinbase/rosetta-sdk-go/storage/encoder"
@@ -42,19 +42,19 @@ const (
 	// to make outbound connections.
 	Offline Mode = "OFFLINE"
 
-	// Mainnet is the Verge Mainnet.
+	// Mainnet is the Euno Mainnet.
 	Mainnet string = "MAINNET"
 
-	// Testnet is Verge Testnet3.
+	// Testnet is Euno Testnet3.
 	Testnet string = "TESTNET"
 
-	// mainnetConfigPath is the path of the Verge
+	// mainnetConfigPath is the path of the Euno
 	// configuration file for mainnet.
-	mainnetConfigPath = "/app/verge-mainnet.conf"
+	mainnetConfigPath = "/app/euno-mainnet.conf"
 
-	// testnetConfigPath is the path of the Verge
+	// testnetConfigPath is the path of the Euno
 	// configuration file for testnet.
-	testnetConfigPath = "/app/verge-testnet.conf"
+	testnetConfigPath = "/app/euno-testnet.conf"
 
 	// Zstandard compression dictionaries
 	transactionNamespace         = "transaction"
@@ -65,11 +65,11 @@ const (
 	testnetRPCPort = 21104
 
 	// min prune depth is 288:
-	// https://github.com/verge/verge/blob/ad2952d17a2af419a04256b10b53c7377f826a27/src/validation.h#L84
+	// https://github.com/euno/euno/blob/ad2952d17a2af419a04256b10b53c7377f826a27/src/validation.h#L84
 	pruneDepth = int64(10000) //nolint
 
 	// min prune height (on mainnet):
-	// https://github.com/verge/verge/blob/62d137ac3b701aae36c1aa3aa93a83fd6357fde6/src/chainparams.cpp#L102
+	// https://github.com/euno/euno/blob/62d137ac3b701aae36c1aa3aa93a83fd6357fde6/src/chainparams.cpp#L102
 	minPruneHeight = int64(100000) //nolint
 
 	// attempt to prune once an hour
@@ -79,7 +79,7 @@ const (
 	// persistent data.
 	DataDirectory = "/data"
 
-	vergedPath  = "verged"
+	eunodPath  = "eunod"
 	indexerPath = "indexer"
 
 	// allFilePermissions specifies anyone can do anything
@@ -120,7 +120,7 @@ type Configuration struct {
 	ConfigPath             string
 	Pruning                *PruningConfiguration
 	IndexerPath            string
-	VergedPath             string
+	EunodPath             string
 	Compressors            []*encoder.CompressorEntry
 }
 
@@ -143,9 +143,9 @@ func LoadConfiguration(baseDirectory string) (*Configuration, error) {
 			return nil, fmt.Errorf("%w: unable to create indexer path", err)
 		}
 
-		config.VergedPath = path.Join(baseDirectory, vergedPath)
-		if err := ensurePathExists(config.VergedPath); err != nil {
-			return nil, fmt.Errorf("%w: unable to create verged path", err)
+		config.EunodPath = path.Join(baseDirectory, eunodPath)
+		if err := ensurePathExists(config.EunodPath); err != nil {
+			return nil, fmt.Errorf("%w: unable to create eunod path", err)
 		}
 	case Offline:
 		config.Mode = Offline
@@ -159,12 +159,12 @@ func LoadConfiguration(baseDirectory string) (*Configuration, error) {
 	switch networkValue {
 	case Mainnet:
 		config.Network = &types.NetworkIdentifier{
-			Blockchain: verge.Blockchain,
-			Network:    verge.MainnetNetwork,
+			Blockchain: euno.Blockchain,
+			Network:    euno.MainnetNetwork,
 		}
-		config.GenesisBlockIdentifier = verge.MainnetGenesisBlockIdentifier
-		config.Params = verge.MainnetParams
-		config.Currency = verge.MainnetCurrency
+		config.GenesisBlockIdentifier = euno.MainnetGenesisBlockIdentifier
+		config.Params = euno.MainnetParams
+		config.Currency = euno.MainnetCurrency
 		config.ConfigPath = mainnetConfigPath
 		config.RPCPort = mainnetRPCPort
 		config.Compressors = []*encoder.CompressorEntry{
@@ -175,12 +175,12 @@ func LoadConfiguration(baseDirectory string) (*Configuration, error) {
 		}
 	case Testnet:
 		config.Network = &types.NetworkIdentifier{
-			Blockchain: verge.Blockchain,
-			Network:    verge.TestnetNetwork,
+			Blockchain: euno.Blockchain,
+			Network:    euno.TestnetNetwork,
 		}
-		config.GenesisBlockIdentifier = verge.TestnetGenesisBlockIdentifier
-		config.Params = verge.TestnetParams
-		config.Currency = verge.TestnetCurrency
+		config.GenesisBlockIdentifier = euno.TestnetGenesisBlockIdentifier
+		config.Params = euno.TestnetParams
+		config.Currency = euno.TestnetCurrency
 		config.ConfigPath = testnetConfigPath
 		config.RPCPort = testnetRPCPort
 		config.Compressors = []*encoder.CompressorEntry{

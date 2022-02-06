@@ -17,14 +17,14 @@ package services
 import (
 	"context"
 
-	"github.com/vergecurrency/rosetta-verge/verge"
+	"github.com/eunocurrency/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 )
 
 const (
 	// NodeVersion is the version of
-	// verge core we are using.
+	// euno core we are using.
 	NodeVersion = "0.20.1"
 
 	// HistoricalBalanceLookup indicates
@@ -41,7 +41,7 @@ const (
 	inlineFetchLimit = 100
 
 	// MiddlewareVersion is the version
-	// of rosetta-verge. We set this as a
+	// of rosetta-euno. We set this as a
 	// variable instead of a constant because
 	// we typically need the pointer of this
 	// value.
@@ -75,7 +75,7 @@ type Indexer interface {
 	GetScriptPubKeys(
 		context.Context,
 		[]*types.Coin,
-	) ([]*verge.ScriptPubKey, error)
+	) ([]*euno.ScriptPubKey, error)
 	GetBalance(
 		context.Context,
 		*types.AccountIdentifier,
@@ -86,7 +86,7 @@ type Indexer interface {
 
 type unsignedTransaction struct {
 	Transaction    string                `json:"transaction"`
-	ScriptPubKeys  []*verge.ScriptPubKey `json:"scriptPubKeys"`
+	ScriptPubKeys  []*euno.ScriptPubKey `json:"scriptPubKeys"`
 	InputAmounts   []string              `json:"input_amounts"`
 	InputAddresses []string              `json:"input_addresses"`
 }
@@ -98,7 +98,7 @@ type preprocessOptions struct {
 }
 
 type constructionMetadata struct {
-	ScriptPubKeys []*verge.ScriptPubKey `json:"script_pub_keys"`
+	ScriptPubKeys []*euno.ScriptPubKey `json:"script_pub_keys"`
 }
 
 type signedTransaction struct {
@@ -109,5 +109,5 @@ type signedTransaction struct {
 // ParseOperationMetadata is returned from
 // ConstructionParse.
 type ParseOperationMetadata struct {
-	ScriptPubKey *verge.ScriptPubKey `json:"scriptPubKey"`
+	ScriptPubKey *euno.ScriptPubKey `json:"scriptPubKey"`
 }

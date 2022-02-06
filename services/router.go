@@ -17,7 +17,7 @@ package services
 import (
 	"net/http"
 
-	"github.com/vergecurrency/rosetta-verge/configuration"
+	"github.com/eunocurrency/rosetta-euno/configuration"
 
 	"github.com/coinbase/rosetta-sdk-go/asserter"
 	"github.com/coinbase/rosetta-sdk-go/server"
