@@ -61,8 +61,8 @@ const (
 	testnetTransactionDictionary = "/app/testnet-transaction.zstd"
 	mainnetTransactionDictionary = "/app/mainnet-transaction.zstd"
 
-	mainnetRPCPort = 20102
-	testnetRPCPort = 21104
+	mainnetRPCPort = 46463
+	testnetRPCPort = 46465
 
 	// min prune depth is 288:
 	// https://github.com/euno/euno/blob/ad2952d17a2af419a04256b10b53c7377f826a27/src/validation.h#L84

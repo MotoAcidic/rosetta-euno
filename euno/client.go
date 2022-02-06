@@ -474,14 +474,17 @@ func (b *Client) getHashFromIndex(
 // function mirrors the behavior of a similar commit in euno-core.
 //
 // Source: https://github.com/euno/euno/commit/ab91bf39b7c11e9c86bb2043c24f0f377f1cf514
+
+//TODO 
+// Need to see if we can remove this since it never happend in the EUNO chain
 func skipTransactionOperations(blockNumber int64, blockHash string, transactionHash string) bool {
-	if blockNumber == 91842 && blockHash == "000000000fb18c16f83228a9055322af6fb29afd89e3d4ca54be0619e8dcdbec" &&
-		transactionHash == "6a7fe6db2fd06b26c0818efae345e1b4446383b0465f74769d60969a1544179f" {
+	if blockNumber == 91842 && blockHash == "7f38f014fb2ed0ebdf8c0fa8b285e8bdf541331151cd4743abeaac0ea3c4b617" &&
+		transactionHash == "ff5febce99ac7b003fcb797d35421a97694febaa9e53b5e535f126f72d9581ca" {
 		return true
 	}
 
-	if blockNumber == 91880 && blockHash == "0000000013240af380cd55e68ed3b71c36af7491905941c7f8e3b4f2f423d8d4" &&
-		transactionHash == "9dbda47f4fb9a385884a63ebc60b80a7fe18c9ebad59b09e9c304621d3303989" {
+	if blockNumber == 91880 && blockHash == "33a806f9962c61c9b438b3bd589989f02a04d575810a7bac6c00e284ee577c15" &&
+		transactionHash == "23158bb473b1fbbf610da8c7b24de39fe08de30965da9a35ec0184b172d5a96d" {
 		return true
 	}
 

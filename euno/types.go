@@ -39,7 +39,7 @@ const (
 	Decimals = 8
 
 	// SatoshisInEuno is the number of
-	// Satoshis in 1 XVG (10^8).
+	// Satoshis in 1 EUNO (10^8).
 	SatoshisInEuno = 100000000
 
 	// InputOpType is used to describe
@@ -88,7 +88,7 @@ const (
 var (
 	// MainnetGenesisBlockIdentifier is the genesis block for mainnet.
 	MainnetGenesisBlockIdentifier = &types.BlockIdentifier{
-		Hash: "00000fc63692467faeb20cdb3b53200dc601d75bdfa1001463304cc790d77278",
+		Hash: "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
 	}
 
 	// MainnetParams are the params for mainnet.
@@ -96,13 +96,13 @@ var (
 
 	// MainnetCurrency is the *types.Currency for mainnet.
 	MainnetCurrency = &types.Currency{
-		Symbol:   "XVG",
+		Symbol:   "EUNO",
 		Decimals: Decimals,
 	}
 
 	// TestnetGenesisBlockIdentifier is the genesis block for testnet.
 	TestnetGenesisBlockIdentifier = &types.BlockIdentifier{
-		Hash: "65b4e101cacf3e1e4f3a9237e3a74ffd1186e595d8b78fa8ea22c21ef5bf9347",
+		Hash: "000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943",
 	}
 
 	// TestnetParams are the params for testnet.
@@ -110,7 +110,7 @@ var (
 
 	// TestnetCurrency is the *types.Currency for testnet.
 	TestnetCurrency = &types.Currency{
-		Symbol:   "tXVG",
+		Symbol:   "tEUNO",
 		Decimals: Decimals,
 	}
 
