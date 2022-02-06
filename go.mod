@@ -1,4 +1,4 @@
-module github.com/eunocurrency/rosetta-euno
+module github.com/MotoAcidic/rosetta-euno
 
 go 1.16
 

@@ -24,11 +24,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/eunocurrency/rosetta-euno/configuration"
-	"github.com/eunocurrency/rosetta-euno/indexer"
-	"github.com/eunocurrency/rosetta-euno/services"
-	"github.com/eunocurrency/rosetta-euno/utils"
-	"github.com/eunocurrency/rosetta-euno/euno"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
+	"github.com/MotoAcidic/rosetta-euno/indexer"
+	"github.com/MotoAcidic/rosetta-euno/services"
+	"github.com/MotoAcidic/rosetta-euno/utils"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/asserter"
 	"github.com/coinbase/rosetta-sdk-go/server"

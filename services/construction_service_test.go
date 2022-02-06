@@ -19,9 +19,9 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/eunocurrency/rosetta-euno/configuration"
-	mocks "github.com/eunocurrency/rosetta-euno/mocks/services"
-	"github.com/eunocurrency/rosetta-euno/euno"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
+	mocks "github.com/MotoAcidic/rosetta-euno/mocks/services"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 	"github.com/stretchr/testify/assert"

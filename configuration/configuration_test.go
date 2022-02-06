@@ -20,7 +20,7 @@ import (
 	"path"
 	"testing"
 
-	"github.com/eunocurrency/rosetta-euno/euno"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/storage/encoder"
 	"github.com/coinbase/rosetta-sdk-go/types"

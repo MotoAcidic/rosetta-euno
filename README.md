@@ -9,9 +9,9 @@
 <p align="center">
   <a href="https://circleci.com/gh/eunocurrency/rosetta-euno/tree/master"><img src="https://circleci.com/gh/eunocurrency/rosetta-euno/tree/master.svg?style=shield" /></a>
   <a href="https://coveralls.io/github/eunocurrency/rosetta-euno"><img src="https://coveralls.io/repos/github/eunocurrency/rosetta-euno/badge.svg" /></a>
-  <a href="https://goreportcard.com/report/github.com/eunocurrency/rosetta-euno"><img src="https://goreportcard.com/badge/github.com/eunocurrency/rosetta-euno" /></a>
-  <a href="https://github.com/eunocurrency/rosetta-euno/blob/master/LICENSE.txt"><img src="https://img.shields.io/github/license/eunocurrency/rosetta-euno.svg" /></a>
-  <a href="https://pkg.go.dev/github.com/eunocurrency/rosetta-euno?tab=overview"><img src="https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=shield" /></a>
+  <a href="https://goreportcard.com/report/github.com/MotoAcidic/rosetta-euno"><img src="https://goreportcard.com/badge/github.com/MotoAcidic/rosetta-euno" /></a>
+  <a href="https://github.com/MotoAcidic/rosetta-euno/blob/master/LICENSE.txt"><img src="https://img.shields.io/github/license/eunocurrency/rosetta-euno.svg" /></a>
+  <a href="https://pkg.go.dev/github.com/MotoAcidic/rosetta-euno?tab=overview"><img src="https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=shield" /></a>
 </p>
 
 <p align="center"><b>

@@ -23,7 +23,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/eunocurrency/rosetta-euno/utils"
+	"github.com/MotoAcidic/rosetta-euno/utils"
 
 	"golang.org/x/sync/errgroup"
 )

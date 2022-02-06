@@ -24,8 +24,8 @@ import (
 	"math/big"
 	"strconv"
 
-	"github.com/eunocurrency/rosetta-euno/configuration"
-	"github.com/eunocurrency/rosetta-euno/euno"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/btcsuite/btcd/btcec"
 	"github.com/btcsuite/btcd/txscript"

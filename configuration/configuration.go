@@ -22,7 +22,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/eunocurrency/rosetta-euno/euno"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/coinbase/rosetta-sdk-go/storage/encoder"

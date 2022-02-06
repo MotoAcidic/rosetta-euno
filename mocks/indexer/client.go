@@ -5,7 +5,7 @@ package indexer
 import (
 	context "context"
 
-	euno "github.com/eunocurrency/rosetta-euno/euno"
+	euno "github.com/MotoAcidic/rosetta-euno/euno"
 
 	mock "github.com/stretchr/testify/mock"
 

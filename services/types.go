@@ -17,7 +17,7 @@ package services
 import (
 	"context"
 
-	"github.com/eunocurrency/rosetta-euno/euno"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 )

@@ -26,7 +26,7 @@ import (
 	"strconv"
 	"time"
 
-	eunoUtils "github.com/eunocurrency/rosetta-euno/utils"
+	eunoUtils "github.com/MotoAcidic/rosetta-euno/utils"
 
 	"github.com/btcsuite/btcutil"
 	"github.com/coinbase/rosetta-sdk-go/types"

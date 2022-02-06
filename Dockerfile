@@ -19,21 +19,19 @@ RUN mkdir -p /app \
   && chown -R nobody:nogroup /app
 WORKDIR /app
 
-# Source: https://github.com/eunocurrency/euno/blob/master/doc/build-unix.md
+# Source: https://github.com/Euno/eunowallet/blob/master/doc/build-unix.md
 RUN apt-get update && apt-get install -y make gcc g++ autoconf autotools-dev bsdmainutils build-essential git libboost-all-dev libcurl4-openssl-dev libdb++-dev libevent-dev libssl-dev libtool pkg-config python python-pip libzmq3-dev zlib1g-dev libseccomp-dev libcap-dev libncap-dev wget libcanberra-gtk-module automake python3 obfs4proxy libncap-dev
 
-# VERSION: Euno Core 7.0
-# Commit created Dec 2, 2021 "update seeds" - used for V7 nodes
-RUN git clone https://github.com/eunocurrency/euno \
-  && cd euno \
+RUN git clone https://github.com/Euno/eunowallet \
+  && cd eunowallet \
   && git checkout e7230b53b6f3c0a70585cfca5b832a5f019e88dd
 
-RUN cd euno \
+RUN cd eunowallet \
   && ./autogen.sh \
   && ./configure --disable-tests --without-miniupnpc --without-gui --with-incompatible-bdb --disable-hardening --disable-zmq --disable-bench --disable-wallet --disable-man --disable-shared \
   && make
 
-RUN mv euno/src/eunod /app/eunod \
+RUN mv eunowallet/src/eunod /app/eunod \
   && rm -rf euno
 
 # Build Rosetta Server Components

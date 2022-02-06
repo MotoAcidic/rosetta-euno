@@ -24,7 +24,7 @@ deps:
 	go get ./...
 
 build:
-	docker build -t rosetta-euno:latest https://github.com/eunocurrency/rosetta-euno.git
+	docker build -t rosetta-euno:latest https://github.com/MotoAcidic/rosetta-euno.git
 
 build-local:
 	docker build -t rosetta-euno:latest .

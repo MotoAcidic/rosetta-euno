@@ -23,9 +23,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/eunocurrency/rosetta-euno/configuration"
-	mocks "github.com/eunocurrency/rosetta-euno/mocks/indexer"
-	"github.com/eunocurrency/rosetta-euno/euno"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
+	mocks "github.com/MotoAcidic/rosetta-euno/mocks/indexer"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 	"github.com/coinbase/rosetta-sdk-go/utils"
