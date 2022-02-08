@@ -1,0 +1,82 @@
+# Copyright 2021 Coinbase, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: CI
+
+on: [push, pull_request]
+
+env:
+  GOLANGCI_LINT_VERSION: v1.32.2
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.GOPATH }}/src/github.com/${{ github.repository }}
+    env:
+      GOPATH: ${{ github.workspace }}
+      GOBIN: ${{ github.workspace }}/bin
+      GO111MODULE: 'on'
+    steps:
+    - uses: actions/setup-go@v2
+      with:
+        go-version: '1.16'
+    - uses: actions/checkout@v2
+      with:
+        path: ${{ env.GOPATH }}/src/github.com/${{ github.repository }}
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ${{ env.GOPATH }}/src
+          ${{ env.GOPATH }}/bin
+          ${{ env.GOPATH }}/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+    - name: Run tests
+      run: make test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-go@v2
+      with:
+        go-version: '1.16'
+    - uses: actions/checkout@v2
+    - name: Run golangci-lint
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin ${{ env.GOLANGCI_LINT_VERSION }}
+        make lint
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-go@v2
+      with:
+        go-version: '1.16'
+    - uses: actions/checkout@v2
+    - name: Check formatting
+      run: |
+        ! gofmt -s -l . | read
+    - name: Check imports
+      run: |
+        ! go run golang.org/x/tools/cmd/goimports -l . | read
+
+  salus:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Salus Scan
+      uses: federacy/scan-action@0.1.1-hotfix
