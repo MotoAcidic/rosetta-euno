@@ -74,6 +74,7 @@ jobs:
       run: |
         ! go run golang.org/x/tools/cmd/goimports@latest . | read
 
+
   salus:
     runs-on: ubuntu-latest
     steps:
