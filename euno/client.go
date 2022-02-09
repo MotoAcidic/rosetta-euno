@@ -474,9 +474,9 @@ func (b *Client) getHashFromIndex(
 // function mirrors the behavior of a similar commit in euno-core.
 //
 // Source: https://github.com/euno/euno/commit/ab91bf39b7c11e9c86bb2043c24f0f377f1cf514
-
-//TODO 
-// Need to see if we can remove this since it never happend in the EUNO chain
+//
+// TODO 
+// Need to see if we can remove this since it never happened in the EUNO chain
 func skipTransactionOperations(blockNumber int64, blockHash string, transactionHash string) bool {
 	if blockNumber == 91842 && blockHash == "7f38f014fb2ed0ebdf8c0fa8b285e8bdf541331151cd4743abeaac0ea3c4b617" &&
 		transactionHash == "ff5febce99ac7b003fcb797d35421a97694febaa9e53b5e535f126f72d9581ca" {
