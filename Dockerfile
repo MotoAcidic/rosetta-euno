@@ -22,9 +22,7 @@ WORKDIR /app
 # Source: https://github.com/Euno/eunowallet/blob/master/doc/build-unix.md
 RUN apt-get update && apt-get install -y make gcc g++ autoconf autotools-dev bsdmainutils build-essential git libboost-all-dev libcurl4-openssl-dev libdb++-dev libevent-dev libssl-dev libtool pkg-config python python-pip libzmq3-dev zlib1g-dev libseccomp-dev libcap-dev libncap-dev wget libcanberra-gtk-module automake python3 obfs4proxy libncap-dev
 
-RUN git clone https://github.com/Euno/eunowallet \
-  && cd eunowallet \
-  && git checkout e7230b53b6f3c0a70585cfca5b832a5f019e88dd
+RUN git clone https://github.com/Euno/eunowallet 
 
 RUN cd eunowallet \
   && ./autogen.sh \
