@@ -28,11 +28,11 @@ const (
 
 	// MainnetNetwork is the value of the network
 	// in MainnetNetworkIdentifier.
-	MainnetNetwork string = "Mainnet"
+	MainnetNetwork string = "main"
 
 	// TestnetNetwork is the value of the network
 	// in TestnetNetworkIdentifier.
-	TestnetNetwork string = "Testnet3"
+	TestnetNetwork string = "test"
 
 	// Decimals is the decimals value
 	// used in Currency.
@@ -88,7 +88,7 @@ const (
 var (
 	// MainnetGenesisBlockIdentifier is the genesis block for mainnet.
 	MainnetGenesisBlockIdentifier = &types.BlockIdentifier{
-		Hash: "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+		Hash: "00000009ea234b1ab29f0172e4d85884a45c0c638192c9c0f781bda67908d56dd",
 	}
 
 	// MainnetParams are the params for mainnet.
@@ -102,7 +102,7 @@ var (
 
 	// TestnetGenesisBlockIdentifier is the genesis block for testnet.
 	TestnetGenesisBlockIdentifier = &types.BlockIdentifier{
-		Hash: "000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943",
+		Hash: "00000055bbced95bf1fe0b4eccaee23ece9d82ceae67e3a4ec4e757619159a9f",
 	}
 
 	// TestnetParams are the params for testnet.
