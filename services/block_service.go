@@ -17,7 +17,7 @@ package services
 import (
 	"context"
 
-	"github.com/vergecurrency/rosetta-verge/configuration"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
 
 	"github.com/coinbase/rosetta-sdk-go/server"
 	"github.com/coinbase/rosetta-sdk-go/types"

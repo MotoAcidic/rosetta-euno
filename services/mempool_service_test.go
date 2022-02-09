@@ -18,8 +18,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/vergecurrency/rosetta-verge/configuration"
-	mocks "github.com/vergecurrency/rosetta-verge/mocks/services"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
+	mocks "github.com/MotoAcidic/rosetta-euno/mocks/services"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 	"github.com/stretchr/testify/assert"

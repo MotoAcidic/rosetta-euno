@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package verge
+package euno
 
 import (
 	"bytes"
@@ -26,7 +26,7 @@ import (
 	"strconv"
 	"time"
 
-	vergeUtils "github.com/vergecurrency/rosetta-verge/utils"
+	eunoUtils "github.com/MotoAcidic/rosetta-euno/utils"
 
 	"github.com/btcsuite/btcutil"
 	"github.com/coinbase/rosetta-sdk-go/types"
@@ -35,7 +35,7 @@ import (
 
 const (
 	// genesisBlockIndex is the height of the block we consider to be the
-	// genesis block of the verge blockchain for polling
+	// genesis block of the euno blockchain for polling
 	genesisBlockIndex = 0
 
 	// requestID is the JSON-RPC request ID we use for making requests.
@@ -56,28 +56,28 @@ const (
 type requestMethod string
 
 const (
-	// https://verge.org/en/developer-reference#getblock
+	// https://euno.org/en/developer-reference#getblock
 	requestMethodGetBlock requestMethod = "getblock"
 
-	// https://verge.org/en/developer-reference#getblockhash
+	// https://euno.org/en/developer-reference#getblockhash
 	requestMethodGetBlockHash requestMethod = "getblockhash"
 
-	// https://verge.org/en/developer-reference#getblockchaininfo
+	// https://euno.org/en/developer-reference#getblockchaininfo
 	requestMethodGetBlockchainInfo requestMethod = "getblockchaininfo"
 
-	// https://developer.verge.org/reference/rpc/getpeerinfo.html
+	// https://developer.euno.org/reference/rpc/getpeerinfo.html
 	requestMethodGetPeerInfo requestMethod = "getpeerinfo"
 
-	// https://developer.verge.org/reference/rpc/pruneblockchain.html
+	// https://developer.euno.org/reference/rpc/pruneblockchain.html
 	requestMethodPruneBlockchain requestMethod = "pruneblockchain"
 
-	// https://developer.verge.org/reference/rpc/sendrawtransaction.html
+	// https://developer.euno.org/reference/rpc/sendrawtransaction.html
 	requestMethodSendRawTransaction requestMethod = "sendrawtransaction"
 
-	// https://developer.verge.org/reference/rpc/estimatesmartfee.html
+	// https://developer.euno.org/reference/rpc/estimatesmartfee.html
 	requestMethodEstimateSmartFee requestMethod = "estimatesmartfee"
 
-	// https://developer.verge.org/reference/rpc/getrawmempool.html
+	// https://developer.euno.org/reference/rpc/getrawmempool.html
 	requestMethodRawMempool requestMethod = "getrawmempool"
 
 	// blockNotFoundErrCode is the RPC error code when a block cannot be found
@@ -89,11 +89,11 @@ const (
 	dialTimeout    = 5 * time.Second
 
 	// timeMultiplier is used to multiply the time
-	// returned in Verge blocks to be milliseconds.
+	// returned in Euno blocks to be milliseconds.
 	timeMultiplier = 1000
 
-	// rpc credentials are fixed in rosetta-verge
-	// because we never expose access to the raw verged
+	// rpc credentials are fixed in rosetta-euno
+	// because we never expose access to the raw eunod
 	// endpoints (that could be used perform an attack, like
 	// changing our peers).
 	rpcUsername = "rosetta"
@@ -109,10 +109,10 @@ var (
 	ErrJSONRPCError = errors.New("JSON-RPC error")
 )
 
-// Client is used to fetch blocks from verged and
-// to parse Verge block data into Rosetta types.
+// Client is used to fetch blocks from eunod and
+// to parse Euno block data into Rosetta types.
 //
-// We opted not to use existing Verge RPC libraries
+// We opted not to use existing Euno RPC libraries
 // because they don't allow providing context
 // in each request.
 type Client struct {
@@ -130,7 +130,7 @@ func LocalhostURL(rpcPort int) string {
 	return fmt.Sprintf("http://localhost:%d", rpcPort)
 }
 
-// NewClient creates a new Verge client.
+// NewClient creates a new Euno client.
 func NewClient(
 	baseURL string,
 	genesisBlockIdentifier *types.BlockIdentifier,
@@ -161,7 +161,7 @@ func newHTTPClient(timeout time.Duration) *http.Client {
 }
 
 // NetworkStatus returns the *types.NetworkStatusResponse for
-// verged.
+// eunod.
 func (b *Client) NetworkStatus(ctx context.Context) (*types.NetworkStatusResponse, error) {
 	rawBlock, err := b.getBlock(ctx, nil)
 	if err != nil {
@@ -240,7 +240,7 @@ func (b *Client) GetRawBlock(
 	return block, coins, nil
 }
 
-// ParseBlock returns a parsed verge block given a raw verge
+// ParseBlock returns a parsed euno block given a raw euno
 // block and a map of transactions containing inputs.
 func (b *Client) ParseBlock(
 	ctx context.Context,
@@ -263,7 +263,7 @@ func (b *Client) ParseBlock(
 }
 
 // SendRawTransaction submits a serialized transaction
-// to verged.
+// to eunod.
 func (b *Client) SendRawTransaction(
 	ctx context.Context,
 	serializedTx string,
@@ -300,14 +300,14 @@ func (b *Client) SuggestedFeeRate(
 }
 
 // PruneBlockchain prunes up to the provided height.
-// https://vergecore.org/en/doc/0.20.0/rpc/blockchain/pruneblockchain
+// https://eunocore.org/en/doc/0.20.0/rpc/blockchain/pruneblockchain
 func (b *Client) PruneBlockchain(
 	ctx context.Context,
 	height int64,
 ) (int64, error) {
 	// Parameters:
 	//   1. Height
-	// https://developer.verge.org/reference/rpc/pruneblockchain.html#argument-1-height
+	// https://developer.euno.org/reference/rpc/pruneblockchain.html#argument-1-height
 	params := []interface{}{height}
 
 	response := &pruneBlockchainResponse{}
@@ -361,7 +361,7 @@ func (b *Client) getBlock(
 	// Parameters:
 	//   1. Block hash (string, required)
 	//   2. Verbosity (integer, optional, default=1)
-	// https://verge.org/en/developer-reference#getblock
+	// https://euno.org/en/developer-reference#getblock
 	params := []interface{}{hash, blockVerbosity}
 
 	response := &blockResponse{}
@@ -447,14 +447,14 @@ func (b *Client) parseBlockData(block *Block) (*types.Block, error) {
 
 // getHashFromIndex performs the `getblockhash` JSON-RPC request for the specified
 // block index, and returns the hash.
-// https://verge.org/en/developer-reference#getblockhash
+// https://euno.org/en/developer-reference#getblockhash
 func (b *Client) getHashFromIndex(
 	ctx context.Context,
 	index int64,
 ) (string, error) {
 	// Parameters:
 	//   1. Block height (numeric, required)
-	// https://verge.org/en/developer-reference#getblockhash
+	// https://euno.org/en/developer-reference#getblockhash
 	params := []interface{}{index}
 
 	response := &blockHashResponse{}
@@ -471,17 +471,20 @@ func (b *Client) getHashFromIndex(
 
 // skipTransactionOperations is used to skip operations on transactions that
 // contain duplicate UTXOs (which are no longer possible after BIP-30). This
-// function mirrors the behavior of a similar commit in verge-core.
+// function mirrors the behavior of a similar commit in euno-core.
 //
-// Source: https://github.com/verge/verge/commit/ab91bf39b7c11e9c86bb2043c24f0f377f1cf514
+// Source: https://github.com/euno/euno/commit/ab91bf39b7c11e9c86bb2043c24f0f377f1cf514
+//
+// TODO 
+// Need to see if we can remove this since it never happened in the EUNO chain
 func skipTransactionOperations(blockNumber int64, blockHash string, transactionHash string) bool {
-	if blockNumber == 91842 && blockHash == "000000000fb18c16f83228a9055322af6fb29afd89e3d4ca54be0619e8dcdbec" &&
-		transactionHash == "6a7fe6db2fd06b26c0818efae345e1b4446383b0465f74769d60969a1544179f" {
+	if blockNumber == 91842 && blockHash == "7f38f014fb2ed0ebdf8c0fa8b285e8bdf541331151cd4743abeaac0ea3c4b617" &&
+		transactionHash == "ff5febce99ac7b003fcb797d35421a97694febaa9e53b5e535f126f72d9581ca" {
 		return true
 	}
 
-	if blockNumber == 91880 && blockHash == "0000000013240af380cd55e68ed3b71c36af7491905941c7f8e3b4f2f423d8d4" &&
-		transactionHash == "9dbda47f4fb9a385884a63ebc60b80a7fe18c9ebad59b09e9c304621d3303989" {
+	if blockNumber == 91880 && blockHash == "33a806f9962c61c9b438b3bd589989f02a04d575810a7bac6c00e284ee577c15" &&
+		transactionHash == "23158bb473b1fbbf610da8c7b24de39fe08de30965da9a35ec0184b172d5a96d" {
 		return true
 	}
 
@@ -494,7 +497,7 @@ func (b *Client) parseTransactions(
 	block *Block,
 	coins map[string]*types.AccountCoin,
 ) ([]*types.Transaction, error) {
-	logger := vergeUtils.ExtractLogger(ctx, "client")
+	logger := eunoUtils.ExtractLogger(ctx, "client")
 
 	if block == nil {
 		return nil, errors.New("error parsing nil block")
@@ -569,7 +572,7 @@ func (b *Client) parseTxOperations(
 	txOps := []*types.Operation{}
 
 	for networkIndex, input := range tx.Inputs {
-		if vergeIsCoinbaseInput(input, txIndex, networkIndex) {
+		if eunoIsCoinbaseInput(input, txIndex, networkIndex) {
 			txOp, err := b.coinbaseTxOperation(input, int64(len(txOps)), int64(networkIndex))
 			if err != nil {
 				return nil, err
@@ -627,7 +630,7 @@ func (b *Client) parseTxOperations(
 }
 
 // parseOutputTransactionOperation returns the types.Operation for the specified
-// `vergeOutput` transaction output.
+// `eunoOutput` transaction output.
 func (b *Client) parseOutputTransactionOperation(
 	output *Output,
 	txHash string,
@@ -656,7 +659,7 @@ func (b *Client) parseOutputTransactionOperation(
 		CoinAction: types.CoinCreated,
 	}
 
-	// If we are unable to parse the output account (i.e. verged
+	// If we are unable to parse the output account (i.e. eunod
 	// returns a blank/nonstandard ScriptPubKey), we create an address as the
 	// concatenation of the tx hash and index.
 	//
@@ -698,17 +701,17 @@ func (b *Client) getInputTxHash(
 	txIndex int,
 	inputIndex int,
 ) (string, int64, bool) {
-	if vergeIsCoinbaseInput(input, txIndex, inputIndex) {
+	if eunoIsCoinbaseInput(input, txIndex, inputIndex) {
 		return "", -1, false
 	}
 
 	return input.TxHash, input.Vout, true
 }
 
-// vergeIsCoinbaseInput returns whether the specified input is
+// eunoIsCoinbaseInput returns whether the specified input is
 // the coinbase input. The coinbase input is always the first input in the first
 // transaction, and does not contain a previous transaction hash.
-func vergeIsCoinbaseInput(input *Input, txIndex int, inputIndex int) bool {
+func eunoIsCoinbaseInput(input *Input, txIndex int, inputIndex int) bool {
 	return txIndex == 0 && inputIndex == 0 && input.TxHash == "" && input.Coinbase != ""
 }
 
@@ -767,7 +770,7 @@ func (b *Client) parseAmount(amount float64) (uint64, error) {
 	return uint64(atomicAmount), nil
 }
 
-// parseOutputAccount parses a vergeScriptPubKey and returns an account
+// parseOutputAccount parses a eunoScriptPubKey and returns an account
 // identifier. The account identifier's address corresponds to the first
 // address encoded in the script.
 func (b *Client) parseOutputAccount(
@@ -803,7 +806,7 @@ func (b *Client) coinbaseTxOperation(
 	}, nil
 }
 
-// post makes a HTTP request to a Verge node
+// post makes a HTTP request to a Euno node
 func (b *Client) post(
 	ctx context.Context,
 	method requestMethod,

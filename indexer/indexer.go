@@ -22,10 +22,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/vergecurrency/rosetta-verge/configuration"
-	"github.com/vergecurrency/rosetta-verge/services"
-	"github.com/vergecurrency/rosetta-verge/utils"
-	"github.com/vergecurrency/rosetta-verge/verge"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
+	"github.com/MotoAcidic/rosetta-euno/services"
+	"github.com/MotoAcidic/rosetta-euno/utils"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/asserter"
 	"github.com/coinbase/rosetta-sdk-go/storage/database"
@@ -80,10 +80,10 @@ var (
 type Client interface {
 	NetworkStatus(context.Context) (*types.NetworkStatusResponse, error)
 	PruneBlockchain(context.Context, int64) (int64, error)
-	GetRawBlock(context.Context, *types.PartialBlockIdentifier) (*verge.Block, []string, error)
+	GetRawBlock(context.Context, *types.PartialBlockIdentifier) (*euno.Block, []string, error)
 	ParseBlock(
 		context.Context,
-		*verge.Block,
+		*euno.Block,
 		map[string]*types.AccountCoin,
 	) (*types.Block, error)
 }
@@ -208,8 +208,8 @@ func Initialize(
 	asserter, err := asserter.NewClientWithOptions(
 		config.Network,
 		config.GenesisBlockIdentifier,
-		verge.OperationTypes,
-		verge.OperationStatuses,
+		euno.OperationTypes,
+		euno.OperationStatuses,
 		services.Errors,
 		nil,
 		new(asserter.Validations),
@@ -251,7 +251,7 @@ func Initialize(
 	return i, nil
 }
 
-// waitForNode returns once verged is ready to serve
+// waitForNode returns once eunod is ready to serve
 // block queries.
 func (i *Indexer) waitForNode(ctx context.Context) error {
 	logger := utils.ExtractLogger(ctx, "indexer")
@@ -261,15 +261,15 @@ func (i *Indexer) waitForNode(ctx context.Context) error {
 			return nil
 		}
 
-		logger.Infow("waiting for verged...")
+		logger.Infow("waiting for eunod...")
 		if err := sdkUtils.ContextSleep(ctx, nodeWaitSleep); err != nil {
 			return err
 		}
 	}
 }
 
-// Sync attempts to index Verge blocks using
-// the verge.Client until stopped.
+// Sync attempts to index Euno blocks using
+// the euno.Client until stopped.
 func (i *Indexer) Sync(ctx context.Context) error {
 	if err := i.waitForNode(ctx); err != nil {
 		return fmt.Errorf("%w: failed to wait for node", err)
@@ -302,7 +302,7 @@ func (i *Indexer) Sync(ctx context.Context) error {
 	return syncer.Sync(ctx, startIndex, indexPlaceholder)
 }
 
-// Prune attempts to prune blocks in verged every
+// Prune attempts to prune blocks in eunod every
 // pruneFrequency.
 func (i *Indexer) Prune(ctx context.Context) error {
 	logger := utils.ExtractLogger(ctx, "pruner")
@@ -321,25 +321,25 @@ func (i *Indexer) Prune(ctx context.Context) error {
 				continue
 			}
 
-			// Must meet pruning conditions in verge core
+			// Must meet pruning conditions in euno core
 			// Source:
-			// https://github.com/verge/verge/blob/a63a26f042134fa80356860c109edb25ac567552/src/rpc/blockchain.cpp#L953-L960
+			// https://github.com/euno/euno/blob/a63a26f042134fa80356860c109edb25ac567552/src/rpc/blockchain.cpp#L953-L960
 			pruneHeight := head.Index - i.pruningConfig.Depth
 			if pruneHeight <= i.pruningConfig.MinHeight {
 				logger.Infow("waiting to prune", "min prune height", i.pruningConfig.MinHeight)
 				continue
 			}
 
-			logger.Infow("attempting to prune verged", "prune height", pruneHeight)
+			logger.Infow("attempting to prune eunod", "prune height", pruneHeight)
 			prunedHeight, err := i.client.PruneBlockchain(ctx, pruneHeight)
 			if err != nil {
 				logger.Warnw(
-					"unable to prune verged",
+					"unable to prune eunod",
 					"prune height", pruneHeight,
 					"error", err,
 				)
 			} else {
-				logger.Infow("pruned verged", "prune height", prunedHeight)
+				logger.Infow("pruned eunod", "prune height", prunedHeight)
 			}
 		}
 	}
@@ -531,7 +531,7 @@ func (i *Indexer) NetworkStatus(
 
 func (i *Indexer) findCoin(
 	ctx context.Context,
-	btcBlock *verge.Block,
+	btcBlock *euno.Block,
 	coinIdentifier string,
 ) (*types.Coin, *types.AccountIdentifier, error) {
 	for ctx.Err() == nil {
@@ -603,7 +603,7 @@ func (i *Indexer) findCoin(
 
 		// Put Transaction in WaitTable if doesn't already exist (could be
 		// multiple listeners)
-		transactionHash := verge.TransactionHash(coinIdentifier)
+		transactionHash := euno.TransactionHash(coinIdentifier)
 		val, ok := i.waiter.Get(transactionHash, false)
 		if !ok {
 			val = &waitTableEntry{
@@ -626,7 +626,7 @@ func (i *Indexer) findCoin(
 
 func (i *Indexer) checkHeaderMatch(
 	ctx context.Context,
-	btcBlock *verge.Block,
+	btcBlock *euno.Block,
 ) error {
 	headBlock, err := i.blockStorage.GetHeadBlockIdentifier(ctx)
 	if err != nil && !errors.Is(err, storageErrs.ErrHeadBlockNotFound) {
@@ -646,7 +646,7 @@ func (i *Indexer) checkHeaderMatch(
 
 func (i *Indexer) findCoins(
 	ctx context.Context,
-	btcBlock *verge.Block,
+	btcBlock *euno.Block,
 	coins []string,
 ) (map[string]*types.AccountCoin, error) {
 	if err := i.checkHeaderMatch(ctx, btcBlock); err != nil {
@@ -685,7 +685,7 @@ func (i *Indexer) findCoins(
 	shouldAbort := false
 	for _, coinIdentifier := range remainingCoins {
 		// Wait on Channel
-		txHash := verge.TransactionHash(coinIdentifier)
+		txHash := euno.TransactionHash(coinIdentifier)
 		entry, ok := i.waiter.Get(txHash, true)
 		if !ok {
 			return nil, fmt.Errorf("transaction %s not in waiter", txHash)
@@ -747,7 +747,7 @@ func (i *Indexer) Block(
 	blockIdentifier *types.PartialBlockIdentifier,
 ) (*types.Block, error) {
 	// get raw block
-	var btcBlock *verge.Block
+	var btcBlock *euno.Block
 	var coins []string
 	var err error
 
@@ -795,14 +795,14 @@ func (i *Indexer) Block(
 func (i *Indexer) GetScriptPubKeys(
 	ctx context.Context,
 	coins []*types.Coin,
-) ([]*verge.ScriptPubKey, error) {
+) ([]*euno.ScriptPubKey, error) {
 	databaseTransaction := i.database.ReadTransaction(ctx)
 	defer databaseTransaction.Discard(ctx)
 
-	scripts := make([]*verge.ScriptPubKey, len(coins))
+	scripts := make([]*euno.ScriptPubKey, len(coins))
 	for j, coin := range coins {
 		coinIdentifier := coin.CoinIdentifier
-		transactionHash, networkIndex, err := verge.ParseCoinIdentifier(coinIdentifier)
+		transactionHash, networkIndex, err := euno.ParseCoinIdentifier(coinIdentifier)
 		if err != nil {
 			return nil, fmt.Errorf("%w: unable to parse coin identifier", err)
 		}
@@ -821,7 +821,7 @@ func (i *Indexer) GetScriptPubKeys(
 		}
 
 		for _, op := range transaction.Operations {
-			if op.Type != verge.OutputOpType {
+			if op.Type != euno.OutputOpType {
 				continue
 			}
 
@@ -829,7 +829,7 @@ func (i *Indexer) GetScriptPubKeys(
 				continue
 			}
 
-			var opMetadata verge.OperationMetadata
+			var opMetadata euno.OperationMetadata
 			if err := types.UnmarshalMap(op.Metadata, &opMetadata); err != nil {
 				return nil, fmt.Errorf(
 					"%w: unable to unmarshal operation metadata %+v",

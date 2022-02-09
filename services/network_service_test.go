@@ -18,9 +18,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/vergecurrency/rosetta-verge/configuration"
-	mocks "github.com/vergecurrency/rosetta-verge/mocks/services"
-	"github.com/vergecurrency/rosetta-verge/verge"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
+	mocks "github.com/MotoAcidic/rosetta-euno/mocks/services"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 	"github.com/stretchr/testify/assert"
@@ -35,16 +35,16 @@ var (
 			MiddlewareVersion: &middlewareVersion,
 		},
 		Allow: &types.Allow{
-			OperationStatuses:       verge.OperationStatuses,
-			OperationTypes:          verge.OperationTypes,
+			OperationStatuses:       euno.OperationStatuses,
+			OperationTypes:          euno.OperationTypes,
 			Errors:                  Errors,
 			HistoricalBalanceLookup: HistoricalBalanceLookup,
 		},
 	}
 
 	networkIdentifier = &types.NetworkIdentifier{
-		Network:    verge.MainnetNetwork,
-		Blockchain: verge.Blockchain,
+		Network:    euno.MainnetNetwork,
+		Blockchain: euno.Blockchain,
 	}
 )
 
@@ -81,7 +81,7 @@ func TestNetworkEndpoints_Online(t *testing.T) {
 	cfg := &configuration.Configuration{
 		Mode:                   configuration.Online,
 		Network:                networkIdentifier,
-		GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+		GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 	}
 	mockIndexer := &mocks.Indexer{}
 	mockClient := &mocks.Client{}
@@ -118,7 +118,7 @@ func TestNetworkEndpoints_Online(t *testing.T) {
 	networkStatus, err := servicer.NetworkStatus(ctx, nil)
 	assert.Nil(t, err)
 	assert.Equal(t, &types.NetworkStatusResponse{
-		GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+		GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 		CurrentBlockIdentifier: blockResponse.Block.BlockIdentifier,
 		Peers: []*types.Peer{
 			{

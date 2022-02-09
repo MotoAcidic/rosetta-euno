@@ -19,9 +19,9 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/vergecurrency/rosetta-verge/configuration"
-	mocks "github.com/vergecurrency/rosetta-verge/mocks/services"
-	"github.com/vergecurrency/rosetta-verge/verge"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
+	mocks "github.com/MotoAcidic/rosetta-euno/mocks/services"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 	"github.com/stretchr/testify/assert"
@@ -47,15 +47,15 @@ func forceMarshalMap(t *testing.T, i interface{}) map[string]interface{} {
 
 func TestConstructionService(t *testing.T) {
 	networkIdentifier = &types.NetworkIdentifier{
-		Network:    verge.TestnetNetwork,
-		Blockchain: verge.Blockchain,
+		Network:    euno.TestnetNetwork,
+		Blockchain: euno.Blockchain,
 	}
 
 	cfg := &configuration.Configuration{
 		Mode:     configuration.Online,
 		Network:  networkIdentifier,
-		Params:   verge.TestnetParams,
-		Currency: verge.TestnetCurrency,
+		Params:   euno.TestnetParams,
+		Currency: euno.TestnetCurrency,
 	}
 
 	mockIndexer := &mocks.Indexer{}
@@ -88,13 +88,13 @@ func TestConstructionService(t *testing.T) {
 			OperationIdentifier: &types.OperationIdentifier{
 				Index: 0,
 			},
-			Type: verge.InputOpType,
+			Type: euno.InputOpType,
 			Account: &types.AccountIdentifier{
 				Address: "tb1qcqzmqzkswhfshzd8kedhmtvgnxax48z4fklhvm",
 			},
 			Amount: &types.Amount{
 				Value:    "-1000000",
-				Currency: verge.TestnetCurrency,
+				Currency: euno.TestnetCurrency,
 			},
 			CoinChange: &types.CoinChange{
 				CoinIdentifier: &types.CoinIdentifier{
@@ -107,26 +107,26 @@ func TestConstructionService(t *testing.T) {
 			OperationIdentifier: &types.OperationIdentifier{
 				Index: 1,
 			},
-			Type: verge.OutputOpType,
+			Type: euno.OutputOpType,
 			Account: &types.AccountIdentifier{
 				Address: "tb1q3r8xjf0c2yazxnq9ey3wayelygfjxpfqjvj5v7",
 			},
 			Amount: &types.Amount{
 				Value:    "954843",
-				Currency: verge.TestnetCurrency,
+				Currency: euno.TestnetCurrency,
 			},
 		},
 		{
 			OperationIdentifier: &types.OperationIdentifier{
 				Index: 2,
 			},
-			Type: verge.OutputOpType,
+			Type: euno.OutputOpType,
 			Account: &types.AccountIdentifier{
 				Address: "tb1qjsrjvk2ug872pdypp33fjxke62y7awpgefr6ua",
 			},
 			Amount: &types.Amount{
 				Value:    "44657",
-				Currency: verge.TestnetCurrency,
+				Currency: euno.TestnetCurrency,
 			},
 		},
 	}
@@ -148,7 +148,7 @@ func TestConstructionService(t *testing.T) {
 				},
 				Amount: &types.Amount{
 					Value:    "-1000000",
-					Currency: verge.TestnetCurrency,
+					Currency: euno.TestnetCurrency,
 				},
 			},
 		},
@@ -161,7 +161,7 @@ func TestConstructionService(t *testing.T) {
 
 	// Test Metadata
 	metadata := &constructionMetadata{
-		ScriptPubKeys: []*verge.ScriptPubKey{
+		ScriptPubKeys: []*euno.ScriptPubKey{
 			{
 				ASM:          "0 c005b00ad075d30b89a7b65b7dad8899ba6a9c55",
 				Hex:          "0014c005b00ad075d30b89a7b65b7dad8899ba6a9c55",
@@ -188,7 +188,7 @@ func TestConstructionService(t *testing.T) {
 		ctx,
 		defaultConfirmationTarget,
 	).Return(
-		verge.MinFeeRate*10,
+		euno.MinFeeRate*10,
 		nil,
 	).Once()
 	metadataResponse, err := servicer.ConstructionMetadata(ctx, &types.ConstructionMetadataRequest{
@@ -201,7 +201,7 @@ func TestConstructionService(t *testing.T) {
 		SuggestedFee: []*types.Amount{
 			{
 				Value:    "1065", // 1,420 * 0.75
-				Currency: verge.TestnetCurrency,
+				Currency: euno.TestnetCurrency,
 			},
 		},
 	}, metadataResponse)
@@ -220,7 +220,7 @@ func TestConstructionService(t *testing.T) {
 		ctx,
 		defaultConfirmationTarget,
 	).Return(
-		verge.MinFeeRate,
+		euno.MinFeeRate,
 		nil,
 	).Once()
 	metadataResponse, err = servicer.ConstructionMetadata(ctx, &types.ConstructionMetadataRequest{
@@ -233,7 +233,7 @@ func TestConstructionService(t *testing.T) {
 		SuggestedFee: []*types.Amount{
 			{
 				Value:    "142", // we don't go below minimum fee rate
-				Currency: verge.TestnetCurrency,
+				Currency: euno.TestnetCurrency,
 			},
 		},
 	}, metadataResponse)
@@ -253,13 +253,13 @@ func TestConstructionService(t *testing.T) {
 				Index:        0,
 				NetworkIndex: &val0,
 			},
-			Type: verge.InputOpType,
+			Type: euno.InputOpType,
 			Account: &types.AccountIdentifier{
 				Address: "tb1qcqzmqzkswhfshzd8kedhmtvgnxax48z4fklhvm",
 			},
 			Amount: &types.Amount{
 				Value:    "-1000000",
-				Currency: verge.TestnetCurrency,
+				Currency: euno.TestnetCurrency,
 			},
 			CoinChange: &types.CoinChange{
 				CoinIdentifier: &types.CoinIdentifier{
@@ -273,13 +273,13 @@ func TestConstructionService(t *testing.T) {
 				Index:        1,
 				NetworkIndex: &val0,
 			},
-			Type: verge.OutputOpType,
+			Type: euno.OutputOpType,
 			Account: &types.AccountIdentifier{
 				Address: "tb1q3r8xjf0c2yazxnq9ey3wayelygfjxpfqjvj5v7",
 			},
 			Amount: &types.Amount{
 				Value:    "954843",
-				Currency: verge.TestnetCurrency,
+				Currency: euno.TestnetCurrency,
 			},
 		},
 		{
@@ -287,13 +287,13 @@ func TestConstructionService(t *testing.T) {
 				Index:        2,
 				NetworkIndex: &val1,
 			},
-			Type: verge.OutputOpType,
+			Type: euno.OutputOpType,
 			Account: &types.AccountIdentifier{
 				Address: "tb1qjsrjvk2ug872pdypp33fjxke62y7awpgefr6ua",
 			},
 			Amount: &types.Amount{
 				Value:    "44657",
-				Currency: verge.TestnetCurrency,
+				Currency: euno.TestnetCurrency,
 			},
 		},
 	}
@@ -376,11 +376,11 @@ func TestConstructionService(t *testing.T) {
 	}, hashResponse)
 
 	// Test Submit
-	vergeTransaction := "010000000001017f9cf50b02dd5258f80cd5c3437302e027dd1336172a20cdc80305c5a55741b10100000000ffffffff02db910e000000000016001488ce6925f8513a234c05c922ee933f221323052071ae000000000000160014940726595c41fca0b4810c62991ad9d289eeb82802473044022025876ec8b9f51d343a5a56ac549c0c828005ef45ebe9da166db645c09157223f02204cd08b7278a8889a81135915bce10d1ef3bb92b217f81a0de7e79ffb3dfd6ac501210325c9a4252789b31dbb3454ec647e9516e7c596bcde2bd5da71a60fab8644e43800000000" // nolint
+	eunoTransaction := "010000000001017f9cf50b02dd5258f80cd5c3437302e027dd1336172a20cdc80305c5a55741b10100000000ffffffff02db910e000000000016001488ce6925f8513a234c05c922ee933f221323052071ae000000000000160014940726595c41fca0b4810c62991ad9d289eeb82802473044022025876ec8b9f51d343a5a56ac549c0c828005ef45ebe9da166db645c09157223f02204cd08b7278a8889a81135915bce10d1ef3bb92b217f81a0de7e79ffb3dfd6ac501210325c9a4252789b31dbb3454ec647e9516e7c596bcde2bd5da71a60fab8644e43800000000" // nolint
 	mockClient.On(
 		"SendRawTransaction",
 		ctx,
-		vergeTransaction,
+		eunoTransaction,
 	).Return(
 		transactionIdentifier.Hash,
 		nil,

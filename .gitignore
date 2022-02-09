@@ -2,3 +2,13 @@ rosetta-verge
 verge-data
 cli-data
 bin
+
+.vs/ProjectSettings.json
+
+.vs/rosetta-euno/project-colors.json
+
+.vs/rosetta-euno/v17/.suo
+
+.vs/slnx.sqlite
+
+.vs/VSWorkspaceState.json

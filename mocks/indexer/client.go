@@ -5,7 +5,7 @@ package indexer
 import (
 	context "context"
 
-	verge "github.com/vergecurrency/rosetta-verge/verge"
+	euno "github.com/MotoAcidic/rosetta-euno/euno"
 
 	mock "github.com/stretchr/testify/mock"
 
@@ -18,15 +18,15 @@ type Client struct {
 }
 
 // GetRawBlock provides a mock function with given fields: _a0, _a1
-func (_m *Client) GetRawBlock(_a0 context.Context, _a1 *types.PartialBlockIdentifier) (*verge.Block, []string, error) {
+func (_m *Client) GetRawBlock(_a0 context.Context, _a1 *types.PartialBlockIdentifier) (*euno.Block, []string, error) {
 	ret := _m.Called(_a0, _a1)
 
-	var r0 *verge.Block
-	if rf, ok := ret.Get(0).(func(context.Context, *types.PartialBlockIdentifier) *verge.Block); ok {
+	var r0 *euno.Block
+	if rf, ok := ret.Get(0).(func(context.Context, *types.PartialBlockIdentifier) *euno.Block); ok {
 		r0 = rf(_a0, _a1)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*verge.Block)
+			r0 = ret.Get(0).(*euno.Block)
 		}
 	}
 
@@ -73,11 +73,11 @@ func (_m *Client) NetworkStatus(_a0 context.Context) (*types.NetworkStatusRespon
 }
 
 // ParseBlock provides a mock function with given fields: _a0, _a1, _a2
-func (_m *Client) ParseBlock(_a0 context.Context, _a1 *verge.Block, _a2 map[string]*types.AccountCoin) (*types.Block, error) {
+func (_m *Client) ParseBlock(_a0 context.Context, _a1 *euno.Block, _a2 map[string]*types.AccountCoin) (*types.Block, error) {
 	ret := _m.Called(_a0, _a1, _a2)
 
 	var r0 *types.Block
-	if rf, ok := ret.Get(0).(func(context.Context, *verge.Block, map[string]*types.AccountCoin) *types.Block); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *euno.Block, map[string]*types.AccountCoin) *types.Block); ok {
 		r0 = rf(_a0, _a1, _a2)
 	} else {
 		if ret.Get(0) != nil {
@@ -86,7 +86,7 @@ func (_m *Client) ParseBlock(_a0 context.Context, _a1 *verge.Block, _a2 map[stri
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(context.Context, *verge.Block, map[string]*types.AccountCoin) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, *euno.Block, map[string]*types.AccountCoin) error); ok {
 		r1 = rf(_a0, _a1, _a2)
 	} else {
 		r1 = ret.Error(1)

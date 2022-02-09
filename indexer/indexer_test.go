@@ -23,9 +23,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/vergecurrency/rosetta-verge/configuration"
-	mocks "github.com/vergecurrency/rosetta-verge/mocks/indexer"
-	"github.com/vergecurrency/rosetta-verge/verge"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
+	mocks "github.com/MotoAcidic/rosetta-euno/mocks/indexer"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 	"github.com/coinbase/rosetta-sdk-go/utils"
@@ -59,10 +59,10 @@ func TestIndexer_Pruning(t *testing.T) {
 	minHeight := int64(200)
 	cfg := &configuration.Configuration{
 		Network: &types.NetworkIdentifier{
-			Network:    verge.MainnetNetwork,
-			Blockchain: verge.Blockchain,
+			Network:    euno.MainnetNetwork,
+			Blockchain: euno.Blockchain,
 		},
-		GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+		GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 		Pruning: &configuration.PruningConfiguration{
 			Frequency: 50 * time.Millisecond,
 			Depth:     pruneDepth,
@@ -74,7 +74,7 @@ func TestIndexer_Pruning(t *testing.T) {
 	i, err := Initialize(ctx, cancel, cfg, mockClient)
 	assert.NoError(t, err)
 
-	// Waiting for verged...
+	// Waiting for eunod...
 	mockClient.On("NetworkStatus", ctx).Return(nil, errors.New("not ready")).Once()
 	mockClient.On("NetworkStatus", ctx).Return(&types.NetworkStatusResponse{}, nil).Once()
 
@@ -83,7 +83,7 @@ func TestIndexer_Pruning(t *testing.T) {
 		CurrentBlockIdentifier: &types.BlockIdentifier{
 			Index: 1000,
 		},
-		GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+		GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 	}, nil)
 
 	// Timeout on first request
@@ -131,7 +131,7 @@ func TestIndexer_Pruning(t *testing.T) {
 			parentIdentifier.Hash = getBlockHash(0)
 		}
 
-		block := &verge.Block{
+		block := &euno.Block{
 			Hash:              identifier.Hash,
 			Height:            identifier.Index,
 			PreviousBlockHash: parentIdentifier.Hash,
@@ -224,10 +224,10 @@ func TestIndexer_Transactions(t *testing.T) {
 	mockClient := &mocks.Client{}
 	cfg := &configuration.Configuration{
 		Network: &types.NetworkIdentifier{
-			Network:    verge.MainnetNetwork,
-			Blockchain: verge.Blockchain,
+			Network:    euno.MainnetNetwork,
+			Blockchain: euno.Blockchain,
 		},
-		GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+		GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 		IndexerPath:            newDir,
 	}
 
@@ -239,13 +239,13 @@ func TestIndexer_Transactions(t *testing.T) {
 		CurrentBlockIdentifier: &types.BlockIdentifier{
 			Index: 1000,
 		},
-		GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+		GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 	}, nil)
 
 	// Add blocks
 	waitForCheck := make(chan struct{})
 	type coinBankEntry struct {
-		Script  *verge.ScriptPubKey
+		Script  *euno.ScriptPubKey
 		Coin    *types.Coin
 		Account *types.AccountIdentifier
 	}
@@ -270,7 +270,7 @@ func TestIndexer_Transactions(t *testing.T) {
 			rawHash := fmt.Sprintf("block %d transaction %d", i, j)
 			hash := fmt.Sprintf("%x", sha256.Sum256([]byte(rawHash)))
 			coinIdentifier := fmt.Sprintf("%s:%d", hash, index0)
-			scriptPubKey := &verge.ScriptPubKey{
+			scriptPubKey := &euno.ScriptPubKey{
 				ASM: coinIdentifier,
 			}
 			marshal, err := types.MarshalMap(scriptPubKey)
@@ -285,14 +285,14 @@ func TestIndexer_Transactions(t *testing.T) {
 							Index:        0,
 							NetworkIndex: &index0,
 						},
-						Status: types.String(verge.SuccessStatus),
-						Type:   verge.OutputOpType,
+						Status: types.String(euno.SuccessStatus),
+						Type:   euno.OutputOpType,
 						Account: &types.AccountIdentifier{
 							Address: rawHash,
 						},
 						Amount: &types.Amount{
 							Value:    fmt.Sprintf("%d", rand.Intn(1000)),
-							Currency: verge.TestnetCurrency,
+							Currency: euno.TestnetCurrency,
 						},
 						CoinChange: &types.CoinChange{
 							CoinAction: types.CoinCreated,
@@ -322,7 +322,7 @@ func TestIndexer_Transactions(t *testing.T) {
 			transactions = append(transactions, tx)
 		}
 
-		block := &verge.Block{
+		block := &euno.Block{
 			Hash:              identifier.Hash,
 			Height:            identifier.Index,
 			PreviousBlockHash: parentIdentifier.Hash,
@@ -401,13 +401,13 @@ func TestIndexer_Transactions(t *testing.T) {
 			if currBlock.BlockIdentifier.Index == 1000 {
 				// Ensure ScriptPubKeys are accessible.
 				allCoins := []*types.Coin{}
-				expectedPubKeys := []*verge.ScriptPubKey{}
+				expectedPubKeys := []*euno.ScriptPubKey{}
 				for k, v := range coinBank {
 					allCoins = append(allCoins, &types.Coin{
 						CoinIdentifier: &types.CoinIdentifier{Identifier: k},
 						Amount: &types.Amount{
 							Value:    fmt.Sprintf("-%s", v.Coin.Amount.Value),
-							Currency: verge.TestnetCurrency,
+							Currency: euno.TestnetCurrency,
 						},
 					})
 					expectedPubKeys = append(expectedPubKeys, v.Script)
@@ -442,10 +442,10 @@ func TestIndexer_Reorg(t *testing.T) {
 	mockClient := &mocks.Client{}
 	cfg := &configuration.Configuration{
 		Network: &types.NetworkIdentifier{
-			Network:    verge.MainnetNetwork,
-			Blockchain: verge.Blockchain,
+			Network:    euno.MainnetNetwork,
+			Blockchain: euno.Blockchain,
 		},
-		GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+		GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 		IndexerPath:            newDir,
 	}
 
@@ -457,13 +457,13 @@ func TestIndexer_Reorg(t *testing.T) {
 		CurrentBlockIdentifier: &types.BlockIdentifier{
 			Index: 1000,
 		},
-		GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+		GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 	}, nil)
 
 	// Add blocks
 	waitForCheck := make(chan struct{})
 	type coinBankEntry struct {
-		Script  *verge.ScriptPubKey
+		Script  *euno.ScriptPubKey
 		Coin    *types.Coin
 		Account *types.AccountIdentifier
 	}
@@ -489,7 +489,7 @@ func TestIndexer_Reorg(t *testing.T) {
 			rawHash := fmt.Sprintf("block %d transaction %d", i, j)
 			hash := fmt.Sprintf("%x", sha256.Sum256([]byte(rawHash)))
 			coinIdentifier := fmt.Sprintf("%s:%d", hash, index0)
-			scriptPubKey := &verge.ScriptPubKey{
+			scriptPubKey := &euno.ScriptPubKey{
 				ASM: coinIdentifier,
 			}
 			marshal, err := types.MarshalMap(scriptPubKey)
@@ -504,14 +504,14 @@ func TestIndexer_Reorg(t *testing.T) {
 							Index:        0,
 							NetworkIndex: &index0,
 						},
-						Status: types.String(verge.SuccessStatus),
-						Type:   verge.OutputOpType,
+						Status: types.String(euno.SuccessStatus),
+						Type:   euno.OutputOpType,
 						Account: &types.AccountIdentifier{
 							Address: rawHash,
 						},
 						Amount: &types.Amount{
 							Value:    fmt.Sprintf("%d", rand.Intn(1000)),
-							Currency: verge.TestnetCurrency,
+							Currency: euno.TestnetCurrency,
 						},
 						CoinChange: &types.CoinChange{
 							CoinAction: types.CoinCreated,
@@ -540,7 +540,7 @@ func TestIndexer_Reorg(t *testing.T) {
 			transactions = append(transactions, tx)
 		}
 
-		block := &verge.Block{
+		block := &euno.Block{
 			Hash:              identifier.Hash,
 			Height:            identifier.Index,
 			PreviousBlockHash: parentIdentifier.Hash,
@@ -684,10 +684,10 @@ func TestIndexer_HeaderReorg(t *testing.T) {
 	mockClient := &mocks.Client{}
 	cfg := &configuration.Configuration{
 		Network: &types.NetworkIdentifier{
-			Network:    verge.MainnetNetwork,
-			Blockchain: verge.Blockchain,
+			Network:    euno.MainnetNetwork,
+			Blockchain: euno.Blockchain,
 		},
-		GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+		GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 		IndexerPath:            newDir,
 	}
 
@@ -699,7 +699,7 @@ func TestIndexer_HeaderReorg(t *testing.T) {
 		CurrentBlockIdentifier: &types.BlockIdentifier{
 			Index: 1000,
 		},
-		GenesisBlockIdentifier: verge.MainnetGenesisBlockIdentifier,
+		GenesisBlockIdentifier: euno.MainnetGenesisBlockIdentifier,
 	}, nil)
 
 	// Add blocks
@@ -719,7 +719,7 @@ func TestIndexer_HeaderReorg(t *testing.T) {
 		}
 
 		transactions := []*types.Transaction{}
-		block := &verge.Block{
+		block := &euno.Block{
 			Hash:              identifier.Hash,
 			Height:            identifier.Index,
 			PreviousBlockHash: parentIdentifier.Hash,
@@ -746,7 +746,7 @@ func TestIndexer_HeaderReorg(t *testing.T) {
 				mock.Anything,
 				&types.PartialBlockIdentifier{Index: &identifier.Index},
 			).Return(
-				&verge.Block{
+				&euno.Block{
 					Hash:              identifier.Hash,
 					Height:            identifier.Index,
 					PreviousBlockHash: "blah",

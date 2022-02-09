@@ -1,4 +1,4 @@
-module github.com/vergecurrency/rosetta-verge
+module github.com/MotoAcidic/rosetta-euno
 
 go 1.16
 

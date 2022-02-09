@@ -17,8 +17,8 @@ package services
 import (
 	"context"
 
-	"github.com/vergecurrency/rosetta-verge/configuration"
-	"github.com/vergecurrency/rosetta-verge/verge"
+	"github.com/MotoAcidic/rosetta-euno/configuration"
+	"github.com/MotoAcidic/rosetta-euno/euno"
 
 	"github.com/coinbase/rosetta-sdk-go/server"
 	"github.com/coinbase/rosetta-sdk-go/types"
@@ -67,7 +67,7 @@ func (s *NetworkAPIService) NetworkStatus(
 
 	peers, err := s.client.GetPeers(ctx)
 	if err != nil {
-		return nil, wrapErr(ErrVerged, err)
+		return nil, wrapErr(ErrEunod, err)
 	}
 
 	cachedBlockResponse, err := s.i.GetBlockLazy(ctx, nil)
@@ -95,8 +95,8 @@ func (s *NetworkAPIService) NetworkOptions(
 			MiddlewareVersion: types.String(MiddlewareVersion),
 		},
 		Allow: &types.Allow{
-			OperationStatuses:       verge.OperationStatuses,
-			OperationTypes:          verge.OperationTypes,
+			OperationStatuses:       euno.OperationStatuses,
+			OperationTypes:          euno.OperationTypes,
 			Errors:                  Errors,
 			HistoricalBalanceLookup: HistoricalBalanceLookup,
 			MempoolCoins:            MempoolCoins,

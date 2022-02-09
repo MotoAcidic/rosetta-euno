@@ -1,7 +1,7 @@
 {
   "network": {
-    "blockchain": "Verge",
-    "network": "Mainnet"
+    "blockchain": "Euno",
+    "network": "main"
   },
   "data_directory": "cli-data",
   "http_timeout": 300,
