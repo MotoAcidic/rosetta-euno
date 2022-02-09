@@ -25,6 +25,9 @@ RUN apt-get update && apt-get install -y make gcc g++ autoconf autotools-dev bsd
 RUN git clone https://github.com/Euno/eunowallet 
 
 RUN cd eunowallet \
+  && cd depends \
+  && make \
+  && cd.. \
   && ./autogen.sh \
   && ./configure --disable-tests --without-miniupnpc --without-gui --with-incompatible-bdb --disable-hardening --disable-zmq --disable-bench --disable-wallet --disable-man --disable-shared \
   && make
