@@ -72,7 +72,7 @@ jobs:
         ! gofmt . | read
     - name: Check imports
       run: |
-        ! go run golang.org/x/tools/cmd/goimports -l . | read
+        ! go run golang.org/x/tools/cmd/goimports@latest . | read
 
   salus:
     runs-on: ubuntu-latest

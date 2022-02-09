@@ -1,7 +1,7 @@
 {
   "network": {
     "blockchain": "Euno",
-    "network": "Testnet3"
+    "network": "test"
   },
   "data_directory": "cli-data",
   "http_timeout": 300,
