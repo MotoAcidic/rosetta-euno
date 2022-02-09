@@ -20,14 +20,11 @@ RUN mkdir -p /app \
 WORKDIR /app
 
 # Source: https://github.com/Euno/eunowallet/blob/master/doc/build-unix.md
-RUN apt-get update && apt-get install -y make gcc g++ autoconf autotools-dev bsdmainutils build-essential git libboost-all-dev libcurl4-openssl-dev libdb++-dev libevent-dev libssl-dev libtool pkg-config python python-pip libzmq3-dev zlib1g-dev libseccomp-dev libcap-dev libncap-dev wget libcanberra-gtk-module automake python3 obfs4proxy libncap-dev
+RUN apt-get update && apt-get install -y make gcc g++ autoconf autotools-dev bsdmainutils build-essential git libboost-all-dev libcurl4-openssl-dev libdb++-dev libevent-dev libssl-dev libtool pkg-config python python-pip libzmq3-dev zlib1g-dev libseccomp-dev libcap-dev libncap-dev wget libcanberra-gtk-module automake python3 obfs4proxy libncap-dev libgmp-dev
 
 RUN git clone https://github.com/Euno/eunowallet 
 
 RUN cd eunowallet \
-  && cd depends \
-  && make \
-  && cd.. \
   && ./autogen.sh \
   && ./configure --disable-tests --without-miniupnpc --without-gui --with-incompatible-bdb --disable-hardening --disable-zmq --disable-bench --disable-wallet --disable-man --disable-shared \
   && make
