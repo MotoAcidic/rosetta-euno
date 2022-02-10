@@ -89,8 +89,6 @@ const (
 func CreateMainNetParams() (*chaincfg.Params) {
 	chaincfg.MainNetParams.PubKeyHashAddrID = 21
 	chaincfg.MainNetParams.ScriptHashAddrID = 17
-	chaincfg.MainNetParams.StakingHashAddrID = 63
-	chaincfg.MainNetParams.SECRET_KEY = 9
 	return &chaincfg.MainNetParams
 }
 
@@ -98,8 +96,6 @@ func CreateMainNetParams() (*chaincfg.Params) {
 func CreateTestNet3Params() (*chaincfg.Params) {
 	chaincfg.TestNet3Params.PubKeyHashAddrID = 139
 	chaincfg.TestNet3Params.ScriptHashAddrID = 19
-	chaincfg.TestNet3Params.StakingHashAddrID = 73
-	chaincfg.TestNet3Params.SECRET_KEY = 239
 	return &chaincfg.TestNet3Params
 }
 
