@@ -1,7 +1,7 @@
 {
   "network": {
-    "blockchain": "Euno",
-    "network": "test"
+    "blockchain": "EunoPay",
+    "network": "Testnet3"
   },
   "data_directory": "cli-data",
   "http_timeout": 300,

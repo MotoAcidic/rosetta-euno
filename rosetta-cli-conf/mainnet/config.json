@@ -1,7 +1,7 @@
 {
   "network": {
-    "blockchain": "Euno",
-    "network": "main"
+    "blockchain": "EunoPay",
+    "network": "Mainnet"
   },
   "data_directory": "cli-data",
   "http_timeout": 300,

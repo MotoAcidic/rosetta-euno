@@ -43,10 +43,10 @@ const (
 	Offline Mode = "OFFLINE"
 
 	// Mainnet is the Euno Mainnet.
-	Mainnet string = "main"
+	Mainnet string = "MAINNET"
 
 	// Testnet is Euno Testnet3.
-	Testnet string = "test"
+	Testnet string = "TESTNET"
 
 	// mainnetConfigPath is the path of the Euno
 	// configuration file for mainnet.
