@@ -28,11 +28,11 @@ const (
 
 	// MainnetNetwork is the value of the network
 	// in MainnetNetworkIdentifier.
-	MainnetNetwork string = "main"
+	MainnetNetwork string = "Mainnet"
 
 	// TestnetNetwork is the value of the network
 	// in TestnetNetworkIdentifier.
-	TestnetNetwork string = "test"
+	TestnetNetwork string = "Testnet3"
 
 	// Decimals is the decimals value
 	// used in Currency.
@@ -85,6 +85,24 @@ const (
 	P2PKHScriptPubkeySize = 25               // P2PKH size
 )
 
+// CreateMainNetParams is a function to override default mainnet settings with address prefixes
+func CreateMainNetParams() (*chaincfg.Params) {
+	chaincfg.MainNetParams.PubKeyHashAddrID = 21
+	chaincfg.MainNetParams.ScriptHashAddrID = 17
+	chaincfg.MainNetParams.StakingHashAddrID = 63
+	chaincfg.MainNetParams.SECRET_KEY = 9
+	return &chaincfg.MainNetParams
+}
+
+// CreateTestNet3Params is a function to override default testnet settings with address prefixes
+func CreateTestNet3Params() (*chaincfg.Params) {
+	chaincfg.TestNet3Params.PubKeyHashAddrID = 139
+	chaincfg.TestNet3Params.ScriptHashAddrID = 19
+	chaincfg.TestNet3Params.StakingHashAddrID = 73
+	chaincfg.TestNet3Params.SECRET_KEY = 239
+	return &chaincfg.TestNet3Params
+}
+
 var (
 	// MainnetGenesisBlockIdentifier is the genesis block for mainnet.
 	MainnetGenesisBlockIdentifier = &types.BlockIdentifier{
@@ -92,7 +110,7 @@ var (
 	}
 
 	// MainnetParams are the params for mainnet.
-	MainnetParams = &chaincfg.MainNetParams
+	MainnetParams = CreateMainNetParams()
 
 	// MainnetCurrency is the *types.Currency for mainnet.
 	MainnetCurrency = &types.Currency{
@@ -106,7 +124,7 @@ var (
 	}
 
 	// TestnetParams are the params for testnet.
-	TestnetParams = &chaincfg.TestNet3Params
+	TestnetParams = CreateTestNet3Params()
 
 	// TestnetCurrency is the *types.Currency for testnet.
 	TestnetCurrency = &types.Currency{
